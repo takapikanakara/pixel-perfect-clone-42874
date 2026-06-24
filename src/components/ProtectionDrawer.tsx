@@ -54,9 +54,10 @@ export function ProtectionDrawer({
 
           {/* Header */}
           <div className="relative px-5 pt-4">
-            <div className="absolute right-3 top-0 pointer-events-none opacity-40">
-              <ShieldCheck size={120} strokeWidth={1.2} className="text-[#d9b87a]" />
+            <div className="absolute right-3 top-0 pointer-events-none opacity-25 blur-[2px]">
+              <ShieldCheck size={130} strokeWidth={1.2} fill="#e8c98a" className="text-[#d9b87a]" />
             </div>
+
             <h2 className="relative text-[26px] font-extrabold leading-tight text-[#7a4f10]">
               Protecção do cliente
             </h2>
