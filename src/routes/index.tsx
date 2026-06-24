@@ -78,6 +78,8 @@ function ProductPage() {
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
+  const [protectionOpen, setProtectionOpen] = useState(false);
+
   const [showTabs, setShowTabs] = useState(false);
   const clickLockRef = useRef(false);
 
