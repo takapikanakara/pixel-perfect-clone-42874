@@ -1,4 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { ChatSheet } from "@/components/ChatSheet";
 import { useEffect, useState } from "react";
 import {
   Search,
