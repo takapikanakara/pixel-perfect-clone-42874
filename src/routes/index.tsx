@@ -490,6 +490,15 @@ function ProductPage() {
       <ShippingDrawer open={shippingOpen} onOpenChange={setShippingOpen} />
       <ProtectionDrawer open={protectionOpen} onOpenChange={setProtectionOpen} />
 
+      {reviewToast && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-8 pointer-events-none">
+          <div className="rounded-2xl bg-[#3a3a3a]/95 px-7 py-5 text-center text-[15px] leading-relaxed text-white shadow-xl max-w-[280px]">
+            Avaliações disponíveis somente após a compra do produto.
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 }
