@@ -3,6 +3,7 @@ import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
 import { ProtectionDrawer } from "@/components/ProtectionDrawer";
+import { useCart } from "@/lib/cart";
 
 import { useEffect, useRef, useState } from "react";
 import {
