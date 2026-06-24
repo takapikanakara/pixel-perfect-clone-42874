@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  ArrowLeft,
   Search,
   Forward,
   ShoppingCart,
@@ -67,9 +66,6 @@ function ProductPage() {
       <div className="mx-auto max-w-[480px] bg-white pb-24">
         {/* Top bar */}
         <header className="sticky top-0 z-20 flex items-center gap-2 bg-white px-3 py-2.5 border-b border-gray-100">
-          <button className="p-1">
-            <ArrowLeft size={26} strokeWidth={2} />
-          </button>
           <div className="flex flex-1 items-center gap-2 rounded-full bg-gray-100 px-4 py-2 min-w-0">
             <Search size={18} className="shrink-0 text-gray-500" />
             <span className="truncate whitespace-nowrap text-[15px] text-gray-700">shark aspirador de mão</span>
