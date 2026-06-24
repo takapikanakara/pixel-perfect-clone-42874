@@ -18,6 +18,7 @@ import {
   Check,
 } from "lucide-react";
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+import shareIcon from "@/assets/share-icon.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
