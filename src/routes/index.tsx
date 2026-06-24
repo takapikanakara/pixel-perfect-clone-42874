@@ -61,6 +61,7 @@ function ProductPage() {
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
   const [tab, setTab] = useState<"visao" | "avaliacoes" | "descricao" | "recomendacoes">("visao");
   const [descOpen, setDescOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -364,10 +365,10 @@ function ProductPage() {
           <Store size={22} strokeWidth={1.6} />
           Loja
         </button>
-        <Link to="/chat" className="flex flex-col items-center gap-0.5 px-2 text-[11px] text-gray-700">
+        <button onClick={() => setChatOpen(true)} className="flex flex-col items-center gap-0.5 px-2 text-[11px] text-gray-700">
           <MessageCircle size={22} strokeWidth={1.6} />
           Chat
-        </Link>
+        </button>
         <button className="ml-1 flex-1 rounded-full bg-gray-100 px-3 py-2.5 text-center text-[13px] font-semibold leading-tight text-gray-900">
           Adicionar
           <div className="text-[12px] font-normal">ao carrinho</div>
@@ -377,6 +378,8 @@ function ProductPage() {
           <div className="text-[11px] font-normal opacity-90">Portes grátis</div>
         </button>
       </div>
+
+      <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
     </div>
   );
 }
