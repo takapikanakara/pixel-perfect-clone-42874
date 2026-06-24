@@ -77,7 +77,7 @@ function ProductPage() {
   const clickLockRef = useRef(false);
 
   useEffect(() => {
-    const ids: TabId[] = ["visao", "descricao", "avaliacoes", "recomendacoes"];
+    const ids: TabId[] = ["visao", "descricao", "avaliacoes"];
     const OFFSET = 120; // header (56) + tabs (~44) + small buffer
 
     function onScroll() {
