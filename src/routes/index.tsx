@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Search,
   Forward,
@@ -59,13 +59,58 @@ function Stars({ value, size = 14 }: { value: number; size?: number }) {
   );
 }
 
+const TABS = [
+  { id: "visao", label: "Visão geral" },
+  { id: "avaliacoes", label: "Avaliações" },
+  { id: "descricao", label: "Descrição" },
+  { id: "recomendacoes", label: "Recomendações" },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
+
 function ProductPage() {
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
-  const [tab, setTab] = useState<"visao" | "avaliacoes" | "descricao" | "recomendacoes">("visao");
+  const [tab, setTab] = useState<TabId>("visao");
   const [descOpen, setDescOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
+  const clickLockRef = useRef(false);
+
+  useEffect(() => {
+    const ids: TabId[] = ["visao", "avaliacoes", "descricao", "recomendacoes"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (clickLockRef.current) return;
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) {
+          const id = visible[0].target.id.replace("sec-", "") as TabId;
+          setTab(id);
+        }
+      },
+      { rootMargin: "-110px 0px -55% 0px", threshold: 0 },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(`sec-${id}`);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  function goToTab(id: TabId) {
+    setTab(id);
+    clickLockRef.current = true;
+    const el = document.getElementById(`sec-${id}`);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+    window.setTimeout(() => {
+      clickLockRef.current = false;
+    }, 700);
+  }
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -87,8 +132,30 @@ function ProductPage() {
           </button>
         </header>
 
+        {/* Sticky section tabs */}
+        <nav className="sticky top-[56px] z-10 flex items-center justify-between gap-2 bg-white px-4 pt-3 border-b border-gray-100">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => goToTab(t.id)}
+              className="relative pb-3 text-[14px] whitespace-nowrap"
+            >
+              <span className={tab === t.id ? "font-semibold text-gray-900" : "text-gray-500"}>
+                {t.label}
+              </span>
+              {tab === t.id && (
+                <span className="absolute bottom-0 left-1/2 h-[3px] w-6 -translate-x-1/2 rounded-full bg-gray-900" />
+              )}
+            </button>
+          ))}
+        </nav>
+
+        {/* Visão geral */}
+        <div id="sec-visao" />
+
         {/* Product image */}
         <div className="flex items-center justify-center bg-white py-6">
+
           <img
             src={sharkVacuum.url}
             alt="Shark Aspirador de Mão"
@@ -203,28 +270,8 @@ function ProductPage() {
           <ChevronRight size={18} className="text-gray-400" />
         </button>
 
-        {/* Tabs */}
-        <nav className="sticky top-[52px] z-10 flex items-center justify-between bg-white px-4 pt-3 border-b border-gray-100">
-          {[
-            { id: "visao", label: "Visão geral" },
-            { id: "avaliacoes", label: "Avaliações" },
-            { id: "descricao", label: "Descrição" },
-            { id: "recomendacoes", label: "Recomendações" },
-          ].map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id as typeof tab)}
-              className="relative pb-3 text-[14px]"
-            >
-              <span className={tab === t.id ? "font-semibold text-gray-900" : "text-gray-500"}>
-                {t.label}
-              </span>
-              {tab === t.id && (
-                <span className="absolute bottom-0 left-1/2 h-[3px] w-6 -translate-x-1/2 rounded-full bg-gray-900" />
-              )}
-            </button>
-          ))}
-        </nav>
+
+
 
         {/* Customer protection */}
         <section className="px-4 pt-5 pb-4 border-b-[6px] border-gray-100">
@@ -254,6 +301,7 @@ function ProductPage() {
         </section>
 
         {/* Description */}
+        <div id="sec-descricao" />
         <section className="px-4 pt-5 pb-4 border-b border-gray-100">
           <h2 className="text-[17px] font-semibold text-gray-900">Descrição do produto</h2>
           <div
@@ -302,7 +350,8 @@ function ProductPage() {
         </section>
 
         {/* Reviews */}
-        <section className="px-4 pt-5 pb-6">
+        <div id="sec-avaliacoes" />
+        <section className="px-4 pt-5 pb-6 border-b border-gray-100">
           <div className="flex items-center justify-between">
             <h2 className="text-[17px] font-semibold text-gray-900">Avaliações (3)</h2>
             <button className="rounded-full border border-gray-300 px-5 py-1.5 text-[14px] font-medium text-gray-900">
@@ -361,7 +410,41 @@ function ProductPage() {
             ))}
           </div>
         </section>
+
+        {/* Recomendações */}
+        <div id="sec-recomendacoes" />
+        <section className="px-4 pt-5 pb-8">
+          <h2 className="text-[17px] font-semibold text-gray-900">Recomendações</h2>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {[
+              { name: "Aspirador Shark Pro 1200W", price: "129,90", old: "199,00" },
+              { name: "Robô Aspirador Inteligente", price: "249,00", old: "399,00" },
+              { name: "Acessório Escova Macia", price: "14,90", old: "24,90" },
+              { name: "Filtro HEPA Substituível", price: "9,90", old: "16,90" },
+            ].map((p) => (
+              <div key={p.name} className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+                <div className="flex aspect-square items-center justify-center bg-gray-50">
+                  <img
+                    src={sharkVacuum.url}
+                    alt={p.name}
+                    className="h-[78%] w-[78%] object-contain"
+                  />
+                </div>
+                <div className="p-2.5">
+                  <div className="line-clamp-2 text-[13px] leading-snug text-gray-900">
+                    {p.name}
+                  </div>
+                  <div className="mt-1.5 flex items-baseline gap-1.5">
+                    <span className="text-[14px] font-bold text-[#ff4d63]">€ {p.price}</span>
+                    <span className="text-[11px] text-gray-400 line-through">€ {p.old}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
+
 
       {/* Bottom action bar */}
       <div className="fixed bottom-0 left-1/2 z-30 flex w-full max-w-[480px] -translate-x-1/2 items-center gap-2 border-t border-gray-100 bg-white px-3 py-2">
