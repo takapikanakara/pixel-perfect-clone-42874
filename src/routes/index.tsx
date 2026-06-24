@@ -18,6 +18,7 @@ import {
   Check,
 } from "lucide-react";
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+import shareIcon from "@/assets/share-icon.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -74,7 +75,7 @@ function ProductPage() {
             <span className="text-[15px] text-gray-700">shark aspirador de mão</span>
           </div>
           <button className="p-1.5">
-            <Forward size={22} strokeWidth={1.8} />
+            <img src={shareIcon.url} alt="Compartilhar" className="h-[22px] w-[22px] object-contain" />
           </button>
           <button className="p-1.5">
             <ShoppingCart size={22} strokeWidth={1.8} />
