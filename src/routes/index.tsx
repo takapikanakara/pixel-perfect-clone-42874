@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Search,
-  Share2,
+  Forward,
   ShoppingCart,
   MoreHorizontal,
   Zap,
