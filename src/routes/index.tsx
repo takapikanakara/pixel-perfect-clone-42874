@@ -215,15 +215,45 @@ function ProductPage() {
         {/* Description */}
         <section className="px-4 pt-5 pb-4 border-b border-gray-100">
           <h2 className="text-[17px] font-semibold text-gray-900">Descrição do produto</h2>
-          <div className="relative mt-3 max-h-[110px] overflow-hidden text-[15px] leading-relaxed text-gray-800">
+          <div
+            className={`relative mt-3 overflow-hidden text-[15px] leading-relaxed text-gray-800 ${
+              descOpen ? "" : "max-h-[110px]"
+            }`}
+          >
             <p>
               Mantenha sua casa e seu carro impecáveis com a praticidade do Aspirador de Mão Shark.
               Com um design ultra leve de apenas 600 gramas, este dispositivo redefine a limpeza
               rápida, permitindo que você alcance frestas, estofados e cantos com facilidade.
             </p>
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent" />
+            {descOpen && (
+              <div className="mt-3 space-y-3">
+                <p>
+                  Equipado com tecnologia de sucção potente, o aspirador remove poeira, migalhas,
+                  pelos de animais e pequenos detritos em segundos. A bateria recarregável de longa
+                  duração garante autonomia suficiente para limpar várias áreas sem interrupções.
+                </p>
+                <p>
+                  Acompanha base de carregamento compacta e acessórios versáteis, ideais para
+                  diferentes superfícies. Perfeito para uso doméstico, no escritório ou no carro.
+                </p>
+                <ul className="list-disc space-y-1 pl-5">
+                  <li>Peso: apenas 600 g</li>
+                  <li>Sem fios, com bateria recarregável</li>
+                  <li>Base de carregamento incluída</li>
+                  <li>Filtro lavável e fácil de limpar</li>
+                </ul>
+              </div>
+            )}
+            {!descOpen && (
+              <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent" />
+            )}
           </div>
-          <button className="mt-2 text-[15px] font-semibold text-gray-900">Ler mais</button>
+          <button
+            onClick={() => setDescOpen((v) => !v)}
+            className="mt-2 text-[15px] font-semibold text-gray-900"
+          >
+            {descOpen ? "Ver menos" : "Ler mais"}
+          </button>
           <p className="mt-4 text-[13px] leading-relaxed text-gray-500">
             Imagens meramente ilustrativas. Pequenas variações de cor podem ocorrer devido à
             iluminação e configurações da tela.
