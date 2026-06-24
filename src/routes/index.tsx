@@ -70,9 +70,9 @@ function ProductPage() {
           <button className="p-1">
             <ArrowLeft size={26} strokeWidth={2} />
           </button>
-          <div className="flex flex-1 items-center gap-2 rounded-full bg-gray-100 px-4 py-2">
-            <Search size={18} className="text-gray-500" />
-            <span className="text-[15px] text-gray-700">shark aspirador de mão</span>
+          <div className="flex flex-1 items-center gap-2 rounded-full bg-gray-100 px-4 py-2 min-w-0">
+            <Search size={18} className="shrink-0 text-gray-500" />
+            <span className="truncate whitespace-nowrap text-[15px] text-gray-700">shark aspirador de mão</span>
           </div>
           <button className="p-1.5">
             <img src={shareIcon.url} alt="Compartilhar" className="h-9 w-9 object-contain" />
