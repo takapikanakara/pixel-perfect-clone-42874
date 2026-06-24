@@ -75,7 +75,7 @@ function ProductPage() {
             <span className="truncate whitespace-nowrap text-[15px] text-gray-700">shark aspirador de mão</span>
           </div>
           <button className="p-1.5">
-            <img src={shareIcon.url} alt="Compartilhar" className="h-9 w-9 object-contain" />
+            <img src={shareIcon.url} alt="Compartilhar" className="h-10 w-10 object-contain" />
           </button>
           <button className="p-1.5">
             <ShoppingCart size={22} strokeWidth={1.8} />
