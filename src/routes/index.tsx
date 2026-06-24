@@ -97,16 +97,27 @@ function ProductPage() {
 
         {/* Flash sale bar */}
         <div className="relative flex items-stretch justify-between overflow-hidden bg-[#ee5e72] px-3 pt-2.5 pb-3 text-white">
-          {/* Faded big lightning bolt next to "OFERTA RELÂMPAGO", fades to the right */}
-          <Zap
-            size={96}
-            strokeWidth={0}
-            className="pointer-events-none absolute top-1/2 right-[140px] -translate-y-1/2 -rotate-12 fill-white/35 text-transparent"
+          {/* Stylized lightning bolt next to "OFERTA RELÂMPAGO", fades to the right */}
+          <svg
+            viewBox="0 0 100 140"
+            className="pointer-events-none absolute top-1/2 right-[132px] h-[78px] w-auto -translate-y-1/2"
             style={{
-              WebkitMaskImage: "linear-gradient(to right, black 20%, transparent 85%)",
-              maskImage: "linear-gradient(to right, black 20%, transparent 85%)",
+              WebkitMaskImage: "linear-gradient(100deg, black 25%, transparent 90%)",
+              maskImage: "linear-gradient(100deg, black 25%, transparent 90%)",
             }}
-          />
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="boltGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.55" />
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0.18" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M58 4 L18 78 L44 78 L34 136 L86 52 L58 52 Z"
+              fill="url(#boltGrad)"
+            />
+          </svg>
 
           {/* Left: price */}
           <div className="relative flex flex-col">
