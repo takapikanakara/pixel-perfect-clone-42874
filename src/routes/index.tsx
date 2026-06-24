@@ -485,7 +485,14 @@ function ProductPage() {
           <MessageCircle size={22} strokeWidth={1.6} />
           Chat
         </button>
-        <button className="ml-1 flex-1 rounded-full bg-gray-100 px-3 py-2.5 text-center text-[13px] font-semibold leading-tight text-gray-900">
+        <button
+          onClick={() => {
+            addToCart(1);
+            setAddedToast(true);
+            window.setTimeout(() => setAddedToast(false), 1800);
+          }}
+          className="ml-1 flex-1 rounded-full bg-gray-100 px-3 py-2.5 text-center text-[13px] font-semibold leading-tight text-gray-900"
+        >
           Adicionar
           <div className="text-[12px] font-normal">ao carrinho</div>
         </button>
@@ -511,6 +518,15 @@ function ProductPage() {
           </div>
         </div>
       )}
+
+      {addedToast && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-8 pointer-events-none">
+          <div className="rounded-2xl bg-[#3a3a3a]/95 px-6 py-4 text-center text-[14px] font-medium text-white shadow-xl">
+            Adicionado ao carrinho
+          </div>
+        </div>
+      )}
+
 
 
     </div>
