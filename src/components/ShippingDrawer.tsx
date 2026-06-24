@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Sheet, SheetContent, SheetPortal } from "@/components/ui/sheet";
 import { Package, MapPin, Ticket, ChevronRight, ChevronDown } from "lucide-react";
+import { DistrictDrawer } from "@/components/DistrictDrawer";
 
 export function ShippingDrawer({
   open,
@@ -8,6 +10,9 @@ export function ShippingDrawer({
   open: boolean;
   onOpenChange: (v: boolean) => void;
 }) {
+  const [district, setDistrict] = useState("Lisboa");
+  const [districtOpen, setDistrictOpen] = useState(false);
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetPortal>
@@ -29,12 +34,18 @@ export function ShippingDrawer({
               <div className="ml-[3px] mt-1">
                 <ChevronDown size={18} className="text-gray-400" strokeWidth={1.8} />
               </div>
-              <div className="mt-1 flex items-center gap-3">
+              <button
+                onClick={() => setDistrictOpen(true)}
+                className="mt-1 flex w-full items-center gap-3 text-left"
+              >
                 <MapPin size={22} className="text-gray-900" strokeWidth={1.6} />
-                <span className="flex-1 text-[16px] text-gray-900">Lisboa, Lisboa, Portugal</span>
+                <span className="flex-1 text-[16px] text-gray-900">
+                  {district}, {district}, Portugal
+                </span>
                 <ChevronRight size={18} className="text-gray-400" />
-              </div>
+              </button>
             </div>
+
 
             <div className="border-t border-gray-100" />
 
@@ -69,6 +80,13 @@ export function ShippingDrawer({
           </div>
         </SheetContent>
       </SheetPortal>
+      <DistrictDrawer
+        open={districtOpen}
+        onOpenChange={setDistrictOpen}
+        selected={district}
+        onSelect={setDistrict}
+      />
     </Sheet>
   );
 }
+
