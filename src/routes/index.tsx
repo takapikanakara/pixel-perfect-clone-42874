@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
+import { ProtectionDrawer } from "@/components/ProtectionDrawer";
+
 import { useEffect, useRef, useState } from "react";
 import {
   Search,
