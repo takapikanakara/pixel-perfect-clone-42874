@@ -479,6 +479,8 @@ function ProductPage() {
       <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
       <InstallmentsDrawer open={installmentsOpen} onOpenChange={setInstallmentsOpen} />
       <ShippingDrawer open={shippingOpen} onOpenChange={setShippingOpen} />
+      <ProtectionDrawer open={protectionOpen} onOpenChange={setProtectionOpen} />
+
     </div>
   );
 }
