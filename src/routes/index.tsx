@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Search,
   Forward,
@@ -59,13 +59,58 @@ function Stars({ value, size = 14 }: { value: number; size?: number }) {
   );
 }
 
+const TABS = [
+  { id: "visao", label: "Visão geral" },
+  { id: "avaliacoes", label: "Avaliações" },
+  { id: "descricao", label: "Descrição" },
+  { id: "recomendacoes", label: "Recomendações" },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
+
 function ProductPage() {
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
-  const [tab, setTab] = useState<"visao" | "avaliacoes" | "descricao" | "recomendacoes">("visao");
+  const [tab, setTab] = useState<TabId>("visao");
   const [descOpen, setDescOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
+  const clickLockRef = useRef(false);
+
+  useEffect(() => {
+    const ids: TabId[] = ["visao", "avaliacoes", "descricao", "recomendacoes"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (clickLockRef.current) return;
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) {
+          const id = visible[0].target.id.replace("sec-", "") as TabId;
+          setTab(id);
+        }
+      },
+      { rootMargin: "-110px 0px -55% 0px", threshold: 0 },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(`sec-${id}`);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  function goToTab(id: TabId) {
+    setTab(id);
+    clickLockRef.current = true;
+    const el = document.getElementById(`sec-${id}`);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 100;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+    window.setTimeout(() => {
+      clickLockRef.current = false;
+    }, 700);
+  }
+
 
   return (
     <div className="min-h-screen bg-white">
