@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
+import { ProtectionDrawer } from "@/components/ProtectionDrawer";
+
 import { useEffect, useRef, useState } from "react";
 import {
   Search,
@@ -76,6 +78,8 @@ function ProductPage() {
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
+  const [protectionOpen, setProtectionOpen] = useState(false);
+
   const [showTabs, setShowTabs] = useState(false);
   const clickLockRef = useRef(false);
 
@@ -285,11 +289,12 @@ function ProductPage() {
 
         {/* Customer protection */}
         <section className="px-4 pt-5 pb-4 border-b-[6px] border-gray-100">
-          <button className="flex w-full items-center gap-2">
+          <button onClick={() => setProtectionOpen(true)} className="flex w-full items-center gap-2">
             <ShieldCheck size={22} className="text-[#a06b1a]" />
             <span className="text-[15px] font-semibold text-[#7a4f10]">Protecção do cliente</span>
             <ChevronRight size={18} className="ml-auto text-gray-400" />
           </button>
+
           <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-[14px] text-gray-800">
             <div className="flex items-start gap-2">
               <Check size={16} className="mt-1 shrink-0 text-gray-500" strokeWidth={2.5} />
@@ -474,6 +479,8 @@ function ProductPage() {
       <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
       <InstallmentsDrawer open={installmentsOpen} onOpenChange={setInstallmentsOpen} />
       <ShippingDrawer open={shippingOpen} onOpenChange={setShippingOpen} />
+      <ProtectionDrawer open={protectionOpen} onOpenChange={setProtectionOpen} />
+
     </div>
   );
 }
