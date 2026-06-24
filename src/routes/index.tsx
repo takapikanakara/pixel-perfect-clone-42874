@@ -87,7 +87,7 @@ function ProductPage() {
         {/* Product image */}
         <div className="flex items-center justify-center bg-white py-6">
           <img
-            src={sharkVacuum}
+            src={sharkVacuum.url}
             alt="Shark Aspirador de Mão"
             width={1024}
             height={1024}
