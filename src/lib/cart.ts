@@ -15,7 +15,7 @@ function write(n: number) {
 }
 
 export function useCart() {
-  const [qty, setQty] = useState<number>(() => read());
+  const [qty, setQty] = useState<number>(0);
 
   useEffect(() => {
     const sync = () => setQty(read());
