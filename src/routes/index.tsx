@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
+import { ShippingDrawer } from "@/components/ShippingDrawer";
 import { useEffect, useState } from "react";
 import {
   Search,
@@ -64,6 +65,7 @@ function ProductPage() {
   const [descOpen, setDescOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
+  const [shippingOpen, setShippingOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -187,7 +189,7 @@ function ProductPage() {
         </section>
 
         {/* Shipping */}
-        <button className="flex w-full items-center gap-3 px-4 py-3 text-left border-b-[6px] border-gray-100">
+        <button onClick={() => setShippingOpen(true)} className="flex w-full items-center gap-3 px-4 py-3 text-left border-b-[6px] border-gray-100">
           <Truck size={26} className="text-gray-500" strokeWidth={1.5} />
           <div className="flex-1">
             <div className="flex items-center gap-2 text-[13px]">
@@ -383,6 +385,7 @@ function ProductPage() {
 
       <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
       <InstallmentsDrawer open={installmentsOpen} onOpenChange={setInstallmentsOpen} />
+      <ShippingDrawer open={shippingOpen} onOpenChange={setShippingOpen} />
     </div>
   );
 }
