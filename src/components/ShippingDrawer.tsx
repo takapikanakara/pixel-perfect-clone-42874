@@ -13,7 +13,7 @@ export function ShippingDrawer({
       <SheetPortal>
         <SheetContent
           side="bottom"
-          className="mx-auto flex max-h-[85vh] max-w-[480px] flex-col gap-0 rounded-t-2xl border-0 bg-white p-0"
+          className="mx-auto flex h-[100vh] max-w-[480px] flex-col gap-0 rounded-t-2xl border-0 bg-white p-0"
         >
           <header className="border-b border-gray-100 px-5 py-4 text-center">
             <h2 className="text-[17px] font-bold text-gray-900">Envio</h2>
