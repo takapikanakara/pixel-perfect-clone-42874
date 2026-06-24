@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Search,
-  Share2,
+  Forward,
   ShoppingCart,
   MoreHorizontal,
   Zap,
@@ -74,7 +74,7 @@ function ProductPage() {
             <span className="text-[15px] text-gray-700">shark aspirador de mão</span>
           </div>
           <button className="p-1.5">
-            <Share2 size={22} strokeWidth={1.8} />
+            <Forward size={22} strokeWidth={1.8} />
           </button>
           <button className="p-1.5">
             <ShoppingCart size={22} strokeWidth={1.8} />
