@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
 import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
@@ -72,7 +72,9 @@ const TABS = [
 type TabId = (typeof TABS)[number]["id"];
 
 function ProductPage() {
+  const navigate = useNavigate();
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
+
   const [tab, setTab] = useState<TabId>("visao");
   const [descOpen, setDescOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
@@ -479,10 +481,14 @@ function ProductPage() {
           Adicionar
           <div className="text-[12px] font-normal">ao carrinho</div>
         </button>
-        <button className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white">
+        <button
+          onClick={() => navigate({ to: "/checkout" })}
+          className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white"
+        >
           Comprar agora
           <div className="text-[11px] font-normal opacity-90">Portes grátis</div>
         </button>
+
       </div>
 
       <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
