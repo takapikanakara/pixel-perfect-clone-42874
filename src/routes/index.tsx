@@ -79,6 +79,8 @@ function ProductPage() {
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
   const [protectionOpen, setProtectionOpen] = useState(false);
+  const [reviewToast, setReviewToast] = useState(false);
+
 
   const [showTabs, setShowTabs] = useState(false);
   const clickLockRef = useRef(false);
