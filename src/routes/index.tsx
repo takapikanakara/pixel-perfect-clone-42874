@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Search,
@@ -363,10 +363,10 @@ function ProductPage() {
           <Store size={22} strokeWidth={1.6} />
           Loja
         </button>
-        <button className="flex flex-col items-center gap-0.5 px-2 text-[11px] text-gray-700">
+        <Link to="/chat" className="flex flex-col items-center gap-0.5 px-2 text-[11px] text-gray-700">
           <MessageCircle size={22} strokeWidth={1.6} />
           Chat
-        </button>
+        </Link>
         <button className="ml-1 flex-1 rounded-full bg-gray-100 px-3 py-2.5 text-center text-[13px] font-semibold leading-tight text-gray-900">
           Adicionar
           <div className="text-[12px] font-normal">ao carrinho</div>
