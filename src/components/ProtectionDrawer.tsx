@@ -54,9 +54,26 @@ export function ProtectionDrawer({
 
           {/* Header */}
           <div className="relative px-5 pt-4">
-            <div className="absolute right-3 top-0 pointer-events-none opacity-25 blur-[2px]">
-              <ShieldCheck size={130} strokeWidth={1.2} fill="#e8c98a" className="text-[#d9b87a]" />
+            <div className="absolute right-3 top-0 pointer-events-none opacity-30 blur-[2px]">
+              <svg width="130" height="130" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+                  fill="#e8c98a"
+                  stroke="#d9b87a"
+                  strokeWidth="1.2"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="m9 12 2 2 4-4"
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
+
 
             <h2 className="relative text-[26px] font-extrabold leading-tight text-[#7a4f10]">
               Protecção do cliente
