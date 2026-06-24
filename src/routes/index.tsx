@@ -138,7 +138,11 @@ function ProductPage() {
         </header>
 
         {/* Sticky section tabs */}
-        <nav className="sticky top-[56px] z-10 flex items-center justify-between gap-2 bg-white px-4 pt-3 border-b border-gray-100">
+        <nav
+          className={`sticky top-[56px] z-10 flex items-center justify-between gap-2 bg-white px-4 pt-3 border-b border-gray-100 transition-all duration-200 ${
+            showTabs ? "opacity-100 max-h-20 pointer-events-auto" : "opacity-0 max-h-0 overflow-hidden pointer-events-none pt-0 border-b-0"
+          }`}
+        >
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -154,6 +158,7 @@ function ProductPage() {
             </button>
           ))}
         </nav>
+
 
         {/* Visão geral */}
         <div id="sec-visao" />
