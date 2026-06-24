@@ -63,7 +63,9 @@ const TABS = [
   { id: "visao", label: "Visão geral" },
   { id: "avaliacoes", label: "Avaliações" },
   { id: "descricao", label: "Descrição" },
+  { id: "recomendacoes", label: "Recomendações" },
 ] as const;
+
 
 type TabId = (typeof TABS)[number]["id"];
 
@@ -74,13 +76,15 @@ function ProductPage() {
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
+  const [showTabs, setShowTabs] = useState(false);
   const clickLockRef = useRef(false);
 
   useEffect(() => {
-    const ids: TabId[] = ["visao", "descricao", "avaliacoes"];
+    const ids: TabId[] = ["visao", "descricao", "avaliacoes", "recomendacoes"];
     const OFFSET = 120; // header (56) + tabs (~44) + small buffer
 
     function onScroll() {
+      setShowTabs(window.scrollY > 200);
       if (clickLockRef.current) return;
       let current: TabId = ids[0];
       for (const id of ids) {
@@ -96,6 +100,7 @@ function ProductPage() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
 
 
   function goToTab(id: TabId) {
@@ -133,7 +138,11 @@ function ProductPage() {
         </header>
 
         {/* Sticky section tabs */}
-        <nav className="sticky top-[56px] z-10 flex items-center justify-between gap-2 bg-white px-4 pt-3 border-b border-gray-100">
+        <nav
+          className={`sticky top-[56px] z-10 flex items-center justify-between gap-2 bg-white px-4 pt-3 border-b border-gray-100 transition-all duration-200 ${
+            showTabs ? "opacity-100 max-h-20 pointer-events-auto" : "opacity-0 max-h-0 overflow-hidden pointer-events-none pt-0 border-b-0"
+          }`}
+        >
           {TABS.map((t) => (
             <button
               key={t.id}
@@ -149,6 +158,7 @@ function ProductPage() {
             </button>
           ))}
         </nav>
+
 
         {/* Visão geral */}
         <div id="sec-visao" />
@@ -411,8 +421,34 @@ function ProductPage() {
           </div>
         </section>
 
-
+        {/* Recomendações */}
+        <div id="sec-recomendacoes" />
+        <section className="px-4 pt-5 pb-8">
+          <h2 className="text-[17px] font-semibold text-gray-900">Recomendações</h2>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {[
+              { name: "Aspirador Shark Pro 1200W", price: "129,90", old: "199,00" },
+              { name: "Robô Aspirador Inteligente", price: "249,00", old: "399,00" },
+              { name: "Acessório Escova Macia", price: "14,90", old: "24,90" },
+              { name: "Filtro HEPA Substituível", price: "9,90", old: "16,90" },
+            ].map((p) => (
+              <div key={p.name} className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+                <div className="flex aspect-square items-center justify-center bg-gray-50">
+                  <img src={sharkVacuum.url} alt={p.name} className="h-[78%] w-[78%] object-contain" />
+                </div>
+                <div className="p-2.5">
+                  <div className="line-clamp-2 text-[13px] leading-snug text-gray-900">{p.name}</div>
+                  <div className="mt-1.5 flex items-baseline gap-1.5">
+                    <span className="text-[14px] font-bold text-[#ff4d63]">€ {p.price}</span>
+                    <span className="text-[11px] text-gray-400 line-through">€ {p.old}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
+
 
 
       {/* Bottom action bar */}
