@@ -17,7 +17,7 @@ import {
   ShieldCheck,
   Check,
 } from "lucide-react";
-import sharkVacuum from "@/assets/shark-vacuum.jpg";
+import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
