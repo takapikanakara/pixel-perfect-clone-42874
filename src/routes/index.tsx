@@ -97,11 +97,15 @@ function ProductPage() {
 
         {/* Flash sale bar */}
         <div className="relative flex items-stretch justify-between overflow-hidden bg-[#ee5e72] px-3 pt-2.5 pb-3 text-white">
-          {/* Faded big lightning bolt behind the right side */}
+          {/* Faded big lightning bolt next to "OFERTA RELÂMPAGO", fades to the right */}
           <Zap
-            size={92}
-            className="pointer-events-none absolute right-[42%] top-1/2 -translate-y-1/2 -rotate-12 fill-white/20 text-transparent"
+            size={96}
             strokeWidth={0}
+            className="pointer-events-none absolute top-1/2 right-[140px] -translate-y-1/2 -rotate-12 fill-white/35 text-transparent"
+            style={{
+              WebkitMaskImage: "linear-gradient(to right, black 20%, transparent 85%)",
+              maskImage: "linear-gradient(to right, black 20%, transparent 85%)",
+            }}
           />
 
           {/* Left: price */}
