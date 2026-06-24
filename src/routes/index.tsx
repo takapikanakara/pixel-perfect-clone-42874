@@ -301,6 +301,7 @@ function ProductPage() {
         </section>
 
         {/* Description */}
+        <div id="sec-descricao" />
         <section className="px-4 pt-5 pb-4 border-b border-gray-100">
           <h2 className="text-[17px] font-semibold text-gray-900">Descrição do produto</h2>
           <div
@@ -349,7 +350,8 @@ function ProductPage() {
         </section>
 
         {/* Reviews */}
-        <section className="px-4 pt-5 pb-6">
+        <div id="sec-avaliacoes" />
+        <section className="px-4 pt-5 pb-6 border-b border-gray-100">
           <div className="flex items-center justify-between">
             <h2 className="text-[17px] font-semibold text-gray-900">Avaliações (3)</h2>
             <button className="rounded-full border border-gray-300 px-5 py-1.5 text-[14px] font-medium text-gray-900">
