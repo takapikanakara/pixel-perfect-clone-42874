@@ -72,7 +72,7 @@ function ChatPage() {
               S
             </div>
             <div className="min-w-0">
-              <div className="truncate text-[15px] font-semibold text-gray-900">Loja Oficial Shark</div>
+              <div className="truncate text-[15px] font-semibold text-gray-900">Chat com a loja</div>
               <div className="flex items-center gap-1.5 text-[12px] text-gray-500">
                 <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
                 Online · resposta imediata
