@@ -1,5 +1,5 @@
 import { Sheet, SheetContent, SheetPortal } from "@/components/ui/sheet";
-import { X, Check } from "lucide-react";
+import { Check } from "lucide-react";
 
 const PRICE = 97.9;
 const OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -22,16 +22,11 @@ export function InstallmentsDrawer({
           side="bottom"
           className="mx-auto flex max-h-[80vh] max-w-[480px] flex-col gap-0 rounded-t-2xl border-0 p-0"
         >
-          <header className="flex items-center justify-between border-b border-gray-100 px-4 py-3">
-            <div>
-              <div className="text-[16px] font-semibold text-gray-900">Pague em parcelas</div>
-              <div className="mt-0.5 text-[12px] text-gray-500">
-                Total: <span className="font-semibold text-gray-900">€ {fmt(PRICE)}</span>
-              </div>
+          <header className="border-b border-gray-100 px-4 py-3">
+            <div className="text-[16px] font-semibold text-gray-900">Pague em parcelas</div>
+            <div className="mt-0.5 text-[12px] text-gray-500">
+              Total: <span className="font-semibold text-gray-900">€ {fmt(PRICE)}</span>
             </div>
-            <button onClick={() => onOpenChange(false)} className="p-1.5" aria-label="Fechar">
-              <X size={22} strokeWidth={1.8} />
-            </button>
           </header>
 
           <div className="flex-1 overflow-y-auto px-4 py-2">
