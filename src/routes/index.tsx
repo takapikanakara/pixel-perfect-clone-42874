@@ -78,25 +78,25 @@ function ProductPage() {
 
   useEffect(() => {
     const ids: TabId[] = ["visao", "avaliacoes", "descricao", "recomendacoes"];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (clickLockRef.current) return;
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible[0]) {
-          const id = visible[0].target.id.replace("sec-", "") as TabId;
-          setTab(id);
-        }
-      },
-      { rootMargin: "-110px 0px -55% 0px", threshold: 0 },
-    );
-    ids.forEach((id) => {
-      const el = document.getElementById(`sec-${id}`);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    const OFFSET = 120; // header (56) + tabs (~44) + small buffer
+
+    function onScroll() {
+      if (clickLockRef.current) return;
+      let current: TabId = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(`sec-${id}`);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top - OFFSET <= 0) current = id;
+      }
+      setTab((prev) => (prev === current ? prev : current));
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
 
   function goToTab(id: TabId) {
     setTab(id);
