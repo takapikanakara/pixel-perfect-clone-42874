@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ChatSheet } from "@/components/ChatSheet";
+import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { useEffect, useState } from "react";
 import {
   Search,
@@ -62,6 +63,7 @@ function ProductPage() {
   const [tab, setTab] = useState<"visao" | "avaliacoes" | "descricao" | "recomendacoes">("visao");
   const [descOpen, setDescOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [installmentsOpen, setInstallmentsOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -156,7 +158,7 @@ function ProductPage() {
         </div>
 
         {/* Installments */}
-        <button className="flex w-full items-center gap-3 border-b border-gray-100 px-4 py-3 text-left">
+        <button onClick={() => setInstallmentsOpen(true)} className="flex w-full items-center gap-3 border-b border-gray-100 px-4 py-3 text-left">
           <Wallet size={22} className="text-gray-800" />
           <span className="text-[14px] text-gray-900">
             8x <span className="font-semibold">€ 12,24</span>{" "}
@@ -380,6 +382,7 @@ function ProductPage() {
       </div>
 
       <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
+      <InstallmentsDrawer open={installmentsOpen} onOpenChange={setInstallmentsOpen} />
     </div>
   );
 }
