@@ -270,28 +270,8 @@ function ProductPage() {
           <ChevronRight size={18} className="text-gray-400" />
         </button>
 
-        {/* Tabs */}
-        <nav className="sticky top-[52px] z-10 flex items-center justify-between bg-white px-4 pt-3 border-b border-gray-100">
-          {[
-            { id: "visao", label: "Visão geral" },
-            { id: "avaliacoes", label: "Avaliações" },
-            { id: "descricao", label: "Descrição" },
-            { id: "recomendacoes", label: "Recomendações" },
-          ].map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id as typeof tab)}
-              className="relative pb-3 text-[14px]"
-            >
-              <span className={tab === t.id ? "font-semibold text-gray-900" : "text-gray-500"}>
-                {t.label}
-              </span>
-              {tab === t.id && (
-                <span className="absolute bottom-0 left-1/2 h-[3px] w-6 -translate-x-1/2 rounded-full bg-gray-900" />
-              )}
-            </button>
-          ))}
-        </nav>
+
+
 
         {/* Customer protection */}
         <section className="px-4 pt-5 pb-4 border-b-[6px] border-gray-100">
