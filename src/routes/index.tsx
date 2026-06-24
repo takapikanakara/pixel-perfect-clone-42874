@@ -76,13 +76,15 @@ function ProductPage() {
   const [chatOpen, setChatOpen] = useState(false);
   const [installmentsOpen, setInstallmentsOpen] = useState(false);
   const [shippingOpen, setShippingOpen] = useState(false);
+  const [showTabs, setShowTabs] = useState(false);
   const clickLockRef = useRef(false);
 
   useEffect(() => {
-    const ids: TabId[] = ["visao", "descricao", "avaliacoes"];
+    const ids: TabId[] = ["visao", "descricao", "avaliacoes", "recomendacoes"];
     const OFFSET = 120; // header (56) + tabs (~44) + small buffer
 
     function onScroll() {
+      setShowTabs(window.scrollY > 200);
       if (clickLockRef.current) return;
       let current: TabId = ids[0];
       for (const id of ids) {
@@ -98,6 +100,7 @@ function ProductPage() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
 
 
   function goToTab(id: TabId) {
