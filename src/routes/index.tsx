@@ -96,7 +96,7 @@ function ProductPage() {
         </div>
 
         {/* Flash sale bar */}
-        <div className="relative flex items-stretch justify-between overflow-hidden bg-[#ee5e72] px-3 pt-2.5 pb-3 text-white">
+        <div className="relative flex items-stretch justify-between overflow-hidden bg-[#FE476C] px-3 pt-2.5 pb-3 text-white">
           {/* Stylized lightning bolt next to "OFERTA RELÂMPAGO", fades to the right */}
           <svg
             viewBox="0 0 100 140"
