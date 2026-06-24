@@ -57,7 +57,7 @@ export function ChatSheet({ open, onOpenChange }: { open: boolean; onOpenChange:
       <SheetPortal>
         <SheetContent
           side="bottom"
-          className="mx-auto flex h-[88vh] max-w-[480px] flex-col gap-0 rounded-t-2xl border-0 p-0"
+          className="mx-auto flex h-[88vh] max-w-[480px] flex-col gap-0 rounded-t-2xl border-0 p-0 [&>button.absolute]:hidden"
         >
           {/* Header */}
           <header className="flex items-center gap-3 border-b border-gray-100 px-3 py-2.5">
