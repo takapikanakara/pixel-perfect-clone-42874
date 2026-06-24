@@ -96,26 +96,49 @@ function ProductPage() {
         </div>
 
         {/* Flash sale bar */}
-        <div className="relative flex items-center justify-between overflow-hidden bg-gradient-to-r from-[#ff5a6e] to-[#ff4d63] px-4 py-3 text-white">
-          <div className="flex items-center gap-2">
-            <span className="rounded bg-white/25 px-1.5 py-0.5 text-[11px] font-semibold">-72%</span>
-            <span className="text-[15px]">€</span>
-            <span className="text-[26px] font-bold leading-none">97,90</span>
-            <Zap size={16} className="ml-1 rotate-90 fill-white" />
+        <div className="relative flex items-stretch justify-between overflow-hidden bg-[#ee5e72] px-4 pt-3 pb-4 text-white">
+          {/* Faded big lightning bolt centered behind */}
+          <Zap
+            size={120}
+            className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 fill-white/15 text-transparent"
+            strokeWidth={0}
+          />
+
+          {/* Left side: price */}
+          <div className="relative flex flex-col">
+            <div className="flex items-end gap-2">
+              <span className="mb-1.5 rounded-md bg-white/25 px-2 py-0.5 text-[12px] font-semibold">
+                -72%
+              </span>
+              <div className="flex items-end leading-none">
+                <span className="mb-1 text-[18px] font-semibold">€</span>
+                <span className="text-[34px] font-extrabold tracking-tight">97,90</span>
+              </div>
+              <svg
+                viewBox="0 0 24 24"
+                className="mb-2 ml-1 h-4 w-4 -rotate-12 fill-none stroke-white"
+                strokeWidth={1.8}
+              >
+                <path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z" />
+                <path d="M12 7v10" strokeDasharray="1.5 2" />
+              </svg>
+            </div>
+            <div className="ml-[52px] mt-0.5 text-[13px] line-through opacity-90">€ 355,00</div>
           </div>
-          <div className="flex flex-col items-end">
-            <div className="flex items-center gap-1 text-[13px] font-semibold">
-              <Zap size={14} className="fill-white" />
+
+          {/* Right side: oferta relâmpago */}
+          <div className="relative flex flex-col items-end justify-center">
+            <div className="flex items-center gap-1.5 text-[14px] font-bold tracking-wide">
+              <Zap size={15} className="fill-white text-white" strokeWidth={0} />
               OFERTA RELÂMPAGO
             </div>
-            <div className="mt-0.5 flex items-center gap-1.5 text-[11px]">
-              <span className="opacity-90">Termina em</span>
-              <span className="rounded bg-black/30 px-1.5 py-0.5 font-mono text-[12px] font-semibold tracking-wider">
+            <div className="mt-1.5 flex items-center gap-2 text-[12px]">
+              <span className="opacity-95">Termina em</span>
+              <span className="rounded-md bg-black/35 px-2 py-0.5 font-mono text-[13px] font-semibold tracking-wider">
                 {countdown}
               </span>
             </div>
           </div>
-          <div className="absolute bottom-0.5 left-[88px] text-[11px] line-through opacity-90">€ 355,00</div>
         </div>
 
         {/* Installments */}
