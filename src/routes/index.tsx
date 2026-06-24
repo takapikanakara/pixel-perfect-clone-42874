@@ -479,10 +479,14 @@ function ProductPage() {
           Adicionar
           <div className="text-[12px] font-normal">ao carrinho</div>
         </button>
-        <button className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white">
+        <button
+          onClick={() => navigate({ to: "/checkout" })}
+          className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white"
+        >
           Comprar agora
           <div className="text-[11px] font-normal opacity-90">Portes grátis</div>
         </button>
+
       </div>
 
       <ChatSheet open={chatOpen} onOpenChange={setChatOpen} />
