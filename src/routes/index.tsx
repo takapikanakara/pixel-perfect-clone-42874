@@ -59,6 +59,7 @@ function Stars({ value, size = 14 }: { value: number; size?: number }) {
 function ProductPage() {
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
   const [tab, setTab] = useState<"visao" | "avaliacoes" | "descricao" | "recomendacoes">("visao");
+  const [descOpen, setDescOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
