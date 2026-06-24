@@ -63,8 +63,8 @@ const TABS = [
   { id: "visao", label: "Visão geral" },
   { id: "avaliacoes", label: "Avaliações" },
   { id: "descricao", label: "Descrição" },
-  { id: "recomendacoes", label: "Recomendações" },
 ] as const;
+
 type TabId = (typeof TABS)[number]["id"];
 
 function ProductPage() {
