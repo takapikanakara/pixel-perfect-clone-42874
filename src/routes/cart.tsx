@@ -91,9 +91,9 @@ function CartPage() {
                 </div>
                 <div className="mt-1 flex items-baseline gap-1">
                   <span className="text-[13px] font-bold text-[#ff4d63]">€</span>
-                  <span className="text-[20px] font-extrabold text-[#ff4d63]">{fmt(unit)}</span>
+                  <span className="text-[20px] font-extrabold text-[#ff4d63]">{fmt(total)}</span>
                 </div>
-                <div className="text-[12.5px] text-gray-400 line-through">€ 355,00</div>
+                <div className="text-[12.5px] text-gray-400 line-through">€ {fmt(355 * qty)}</div>
                 <div className="mt-1.5 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="text-[13px] font-bold text-[#ff4d63]">-72%</span>
