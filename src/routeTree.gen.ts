@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SharkVentoinhaFlexbreezeHydrogoRouteImport } from './routes/shark-ventoinha-flexbreeze-hydrogo'
 import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirador-de-maos'
+import { Route as ParafusadeiraFuradeira48vYuyango4RouteImport } from './routes/parafusadeira-furadeira-48v-yuyango4'
 import { Route as MaquinaDeGranizadosNinjaSlushiRouteImport } from './routes/maquina-de-granizados-ninja-slushi'
 import { Route as ConsolaNintendoSwitch2MarioKartWorldRouteImport } from './routes/consola-nintendo-switch-2-mario-kart-world'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -33,6 +34,12 @@ const SharkAspiradorDeMaosRoute = SharkAspiradorDeMaosRouteImport.update({
   path: '/shark-aspirador-de-maos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ParafusadeiraFuradeira48vYuyango4Route =
+  ParafusadeiraFuradeira48vYuyango4RouteImport.update({
+    id: '/parafusadeira-furadeira-48v-yuyango4',
+    path: '/parafusadeira-furadeira-48v-yuyango4',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const MaquinaDeGranizadosNinjaSlushiRoute =
   MaquinaDeGranizadosNinjaSlushiRouteImport.update({
     id: '/maquina-de-granizados-ninja-slushi',
@@ -97,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/consola-nintendo-switch-2-mario-kart-world': typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
+  '/parafusadeira-furadeira-48v-yuyango4': typeof ParafusadeiraFuradeira48vYuyango4Route
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
@@ -111,6 +119,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/consola-nintendo-switch-2-mario-kart-world': typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
+  '/parafusadeira-furadeira-48v-yuyango4': typeof ParafusadeiraFuradeira48vYuyango4Route
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
@@ -126,6 +135,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/consola-nintendo-switch-2-mario-kart-world': typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
+  '/parafusadeira-furadeira-48v-yuyango4': typeof ParafusadeiraFuradeira48vYuyango4Route
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/consola-nintendo-switch-2-mario-kart-world'
     | '/maquina-de-granizados-ninja-slushi'
+    | '/parafusadeira-furadeira-48v-yuyango4'
     | '/shark-aspirador-de-maos'
     | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/consola-nintendo-switch-2-mario-kart-world'
     | '/maquina-de-granizados-ninja-slushi'
+    | '/parafusadeira-furadeira-48v-yuyango4'
     | '/shark-aspirador-de-maos'
     | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
@@ -170,6 +182,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/consola-nintendo-switch-2-mario-kart-world'
     | '/maquina-de-granizados-ninja-slushi'
+    | '/parafusadeira-furadeira-48v-yuyango4'
     | '/shark-aspirador-de-maos'
     | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
@@ -185,6 +198,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ConsolaNintendoSwitch2MarioKartWorldRoute: typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   MaquinaDeGranizadosNinjaSlushiRoute: typeof MaquinaDeGranizadosNinjaSlushiRoute
+  ParafusadeiraFuradeira48vYuyango4Route: typeof ParafusadeiraFuradeira48vYuyango4Route
   SharkAspiradorDeMaosRoute: typeof SharkAspiradorDeMaosRoute
   SharkVentoinhaFlexbreezeHydrogoRoute: typeof SharkVentoinhaFlexbreezeHydrogoRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -206,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/shark-aspirador-de-maos'
       fullPath: '/shark-aspirador-de-maos'
       preLoaderRoute: typeof SharkAspiradorDeMaosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parafusadeira-furadeira-48v-yuyango4': {
+      id: '/parafusadeira-furadeira-48v-yuyango4'
+      path: '/parafusadeira-furadeira-48v-yuyango4'
+      fullPath: '/parafusadeira-furadeira-48v-yuyango4'
+      preLoaderRoute: typeof ParafusadeiraFuradeira48vYuyango4RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/maquina-de-granizados-ninja-slushi': {
@@ -291,6 +312,8 @@ const rootRouteChildren: RootRouteChildren = {
   ConsolaNintendoSwitch2MarioKartWorldRoute:
     ConsolaNintendoSwitch2MarioKartWorldRoute,
   MaquinaDeGranizadosNinjaSlushiRoute: MaquinaDeGranizadosNinjaSlushiRoute,
+  ParafusadeiraFuradeira48vYuyango4Route:
+    ParafusadeiraFuradeira48vYuyango4Route,
   SharkAspiradorDeMaosRoute: SharkAspiradorDeMaosRoute,
   SharkVentoinhaFlexbreezeHydrogoRoute: SharkVentoinhaFlexbreezeHydrogoRoute,
   ApiChatRoute: ApiChatRoute,
