@@ -3,6 +3,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  retainSearchParams,
   useRouter,
   useRouterState,
   HeadContent,
