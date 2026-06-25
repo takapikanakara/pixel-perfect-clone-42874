@@ -115,7 +115,9 @@ function CheckoutPage() {
   const [nif, setNif] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [showMbwayFallback, setShowMbwayFallback] = useState(false);
   const createTx = useServerFn(createZangiwayTransaction);
+
 
   useEffect(() => {
     const clean = cp.replace(/\D/g, "");
