@@ -15,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LoaderHost } from "@/components/CrossLoader";
 import { PRODUCTS } from "@/lib/products";
 import { track } from "@/lib/tracking";
+import { UtmPersistor } from "@/lib/utm-persistor";
 
 function NotFoundComponent() {
   return (
