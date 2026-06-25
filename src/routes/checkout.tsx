@@ -465,7 +465,7 @@ function CheckoutPage() {
               data: {
                 amount: total,
                 method: payment,
-                paymentDescription: `Shark Aspirador x${qty}`,
+                paymentDescription: lines.map((l) => `${l.product.shortName} x${l.qty}`).join(", ") || "Encomenda",
                 payer: {
                   email,
                   name: nome,
