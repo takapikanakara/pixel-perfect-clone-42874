@@ -22,6 +22,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PagamentoIdRouteImport } from './routes/pagamento.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiPublicZangiwayWebhookRouteImport } from './routes/api/public/zangiway-webhook'
+import { Route as ApiPublicTiktokCapiRouteImport } from './routes/api/public/tiktok-capi'
 
 const SharkVentoinhaFlexbreezeHydrogoRoute =
   SharkVentoinhaFlexbreezeHydrogoRouteImport.update({
@@ -95,6 +96,11 @@ const ApiPublicZangiwayWebhookRoute =
     path: '/api/public/zangiway-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicTiktokCapiRoute = ApiPublicTiktokCapiRouteImport.update({
+  id: '/api/public/tiktok-capi',
+  path: '/api/public/tiktok-capi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
+  '/api/public/tiktok-capi': typeof ApiPublicTiktokCapiRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
+  '/api/public/tiktok-capi': typeof ApiPublicTiktokCapiRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRoutesById {
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
+  '/api/public/tiktok-capi': typeof ApiPublicTiktokCapiRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRouteTypes {
@@ -157,6 +166,7 @@ export interface FileRouteTypes {
     | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
     | '/pagamento/$id'
+    | '/api/public/tiktok-capi'
     | '/api/public/zangiway-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -172,6 +182,7 @@ export interface FileRouteTypes {
     | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
     | '/pagamento/$id'
+    | '/api/public/tiktok-capi'
     | '/api/public/zangiway-webhook'
   id:
     | '__root__'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
     | '/pagamento/$id'
+    | '/api/public/tiktok-capi'
     | '/api/public/zangiway-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -203,6 +215,7 @@ export interface RootRouteChildren {
   SharkVentoinhaFlexbreezeHydrogoRoute: typeof SharkVentoinhaFlexbreezeHydrogoRoute
   ApiChatRoute: typeof ApiChatRoute
   PagamentoIdRoute: typeof PagamentoIdRoute
+  ApiPublicTiktokCapiRoute: typeof ApiPublicTiktokCapiRoute
   ApiPublicZangiwayWebhookRoute: typeof ApiPublicZangiwayWebhookRoute
 }
 
@@ -299,6 +312,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicZangiwayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/tiktok-capi': {
+      id: '/api/public/tiktok-capi'
+      path: '/api/public/tiktok-capi'
+      fullPath: '/api/public/tiktok-capi'
+      preLoaderRoute: typeof ApiPublicTiktokCapiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -318,18 +338,9 @@ const rootRouteChildren: RootRouteChildren = {
   SharkVentoinhaFlexbreezeHydrogoRoute: SharkVentoinhaFlexbreezeHydrogoRoute,
   ApiChatRoute: ApiChatRoute,
   PagamentoIdRoute: PagamentoIdRoute,
+  ApiPublicTiktokCapiRoute: ApiPublicTiktokCapiRoute,
   ApiPublicZangiwayWebhookRoute: ApiPublicZangiwayWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
