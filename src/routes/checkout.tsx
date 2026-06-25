@@ -81,10 +81,7 @@ function CheckoutPage() {
             <Field placeholder="E-mail" />
             <Field placeholder="Código postal (1234-567)" />
             <div className="grid grid-cols-2 gap-3">
-              <input
-                defaultValue="Distrito"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3.5 text-[15px] font-medium text-gray-900 outline-none"
-              />
+              <Field placeholder="Distrito" />
               <Field placeholder="Cidade" />
             </div>
             <Field placeholder="Freguesia" />
