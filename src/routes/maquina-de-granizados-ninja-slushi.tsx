@@ -242,7 +242,7 @@ function ProductPage() {
               </span>
               <div className="flex items-end leading-none">
                 <span className="mb-0.5 text-[14px] font-semibold">€</span>
-                <span className="text-[26px] font-extrabold tracking-tight">97,90</span>
+                <span className="text-[26px] font-extrabold tracking-tight">109,90</span>
               </div>
               <svg
                 viewBox="0 0 24 24"
