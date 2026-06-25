@@ -2,6 +2,7 @@ import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 import ninjaSlushi from "@/assets/ninja-slushi.webp.asset.json";
 import sharkFlexbreeze from "@/assets/shark-flexbreeze.jpg.asset.json";
 import roomba from "@/assets/roomba-105.jpg.asset.json";
+import switch2 from "@/assets/switch2-mariokart.webp.asset.json";
 
 export type Product = {
   id: string;
@@ -49,6 +50,15 @@ export const PRODUCTS: Product[] = [
     price: 39,
     oldPrice: 149.99,
     image: roomba.url,
+  },
+  {
+    id: "switch2-mariokart",
+    slug: "consola-nintendo-switch-2-mario-kart-world",
+    name: "Consola Nintendo Switch 2 + Jogo Mario Kart World (Código de Descarga na Caixa)",
+    shortName: "Nintendo Switch 2 + Mario Kart World",
+    price: 139.9,
+    oldPrice: 489.99,
+    image: switch2.url,
   },
 ];
 
