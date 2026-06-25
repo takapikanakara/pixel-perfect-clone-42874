@@ -22,7 +22,7 @@ import {
   ShieldCheck,
   Check,
 } from "lucide-react";
-import ninjaSlushi from "@/assets/ninja-slushi.jpg.asset.json";
+import ninjaSlushi from "@/assets/ninja-slushi.webp.asset.json";
 import shareIcon from "@/assets/share-icon.png.asset.json";
 
 export const Route = createFileRoute("/maquina-de-granizados-ninja-slushi")({
