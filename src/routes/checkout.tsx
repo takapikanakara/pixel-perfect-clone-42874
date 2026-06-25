@@ -191,6 +191,7 @@ function CheckoutPage() {
             <Field placeholder="Nome completo" value={nome} onChange={(v) => setNome(titleCase(v))} />
             <Field placeholder="+351 912 345 678" value={telefone} onChange={(v) => setTelefone(formatPhonePT(v))} inputMode="tel" maxLength={17} />
             <Field placeholder="E-mail" value={email} onChange={(v) => setEmail(v.trim().toLowerCase())} inputMode="email" type="email" />
+            <Field placeholder="NIF (contribuinte)" value={nif} onChange={(v) => setNif(onlyDigits(v, 9))} inputMode="numeric" maxLength={9} />
             <div>
               <Field placeholder="Código postal (1234-567)" value={cp} onChange={(v) => setCp(formatCP(v))} inputMode="numeric" maxLength={8} />
               {cpLoading && <p className="mt-1 px-1 text-[12px] text-gray-500">A procurar morada…</p>}
