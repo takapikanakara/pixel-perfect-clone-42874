@@ -4,6 +4,7 @@ import sharkFlexbreeze from "@/assets/shark-flexbreeze.jpg.asset.json";
 import roomba from "@/assets/roomba-105.jpg.asset.json";
 import switch2 from "@/assets/switch2-mariokart.webp.asset.json";
 import album from "@/assets/album-mundial-2026.png.asset.json";
+import parafusadeira from "@/assets/parafusadeira-48v.png.asset.json";
 
 export type Product = {
   id: string;
@@ -69,6 +70,15 @@ export const PRODUCTS: Product[] = [
     price: 49.9,
     oldPrice: 75,
     image: album.url,
+  },
+  {
+    id: "parafusadeira-48v",
+    slug: "parafusadeira-furadeira-48v-yuyango4",
+    name: "Parafusadeira Furadeira 48V 2 Baterias Com Maleta e Acessórios Completo-Yuyango4",
+    shortName: "Parafusadeira 48V + Maleta",
+    price: 97.9,
+    oldPrice: 435.6,
+    image: parafusadeira.url,
   },
 ];
 
