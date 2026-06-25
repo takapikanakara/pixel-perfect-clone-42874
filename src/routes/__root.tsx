@@ -78,7 +78,34 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const TRACKING_KEYS = [
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_term",
+  "utm_content",
+  "src",
+  "sck",
+  "xcod",
+  "gclid",
+  "fbclid",
+  "ttclid",
+] as const;
+
+type TrackingSearch = Partial<Record<(typeof TRACKING_KEYS)[number], string>>;
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  validateSearch: (search: Record<string, unknown>): TrackingSearch => {
+    const out: TrackingSearch = {};
+    for (const key of TRACKING_KEYS) {
+      const v = search[key];
+      if (typeof v === "string" && v.length > 0) out[key] = v;
+    }
+    return out;
+  },
+  search: {
+    middlewares: [retainSearchParams([...TRACKING_KEYS])],
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
