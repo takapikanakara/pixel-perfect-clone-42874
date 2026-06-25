@@ -392,11 +392,8 @@ function CheckoutPage() {
                 payment === "multibanco" ? "border-[#ff4d63] bg-white" : "border-gray-200 bg-white"
               }`}
             >
-              <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-md border border-gray-200 bg-white text-[10px] font-extrabold leading-none text-blue-700">
-                <div className="text-center">
-                  <div className="text-[13px]">MB</div>
-                  <div className="text-[7px] tracking-wider">MULTIBANCO</div>
-                </div>
+              <div className="flex h-12 w-14 shrink-0 items-center justify-center rounded-md border border-gray-200 bg-white p-1">
+                <img src={multibancoLogo.url} alt="Multibanco" className="h-full w-full object-contain" />
               </div>
               <div className="flex-1">
                 <div className="text-[15px] font-bold text-gray-900">Multibanco</div>
