@@ -100,7 +100,10 @@ export const createZangiwayTransaction = createServerFn({ method: "POST" })
     let json: any = null;
     try { json = JSON.parse(text); } catch {}
     if (!res.ok) {
-      console.error("[ZangiWay] create failed", res.status, text);
+      console.error("[ZangiWay] create failed", res.status, text.slice(0, 500));
+      if (res.status >= 500) {
+        throw new Error("Gateway de pagamento indisponível. Tente novamente em instantes.");
+      }
       throw new Error(json?.message || `ZangiWay erro ${res.status}`);
     }
     return {
