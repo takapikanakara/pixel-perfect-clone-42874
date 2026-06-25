@@ -159,8 +159,9 @@ function CheckoutPage() {
   const ss = secondsLeft % 60;
   const timer = `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
 
-  const unit = 97.9;
-  const subtotal = unit * qty;
+  const subtotal = cartSubtotal;
+  const fullPriceTotal = lines.reduce((acc, l) => acc + l.product.oldPrice * l.qty, 0);
+  const discount = Math.max(0, fullPriceTotal - subtotal);
   const shippingCost = shipping === "expressa" ? 8 : 0;
   const total = subtotal + shippingCost;
   const fmt = (n: number) => n.toFixed(2).replace(".", ",");
