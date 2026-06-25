@@ -154,11 +154,11 @@ function CheckoutPage() {
     return () => clearInterval(id);
   }, []);
 
-  const checkoutFiredRef = useState(false);
+  const checkoutFiredRef = useRef(false);
   useEffect(() => {
     if (lines.length === 0) return;
-    if ((checkoutFiredRef[0] as any)) return;
-    checkoutFiredRef[1](true as any);
+    if (checkoutFiredRef.current) return;
+    checkoutFiredRef.current = true;
     track("InitiateCheckout", {
       contents: lines.map((l) => ({
         content_id: l.product.id,
