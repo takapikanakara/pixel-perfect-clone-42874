@@ -160,7 +160,7 @@ function CheckoutPage() {
       <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-white pb-32">
         {/* Header */}
         <header className="sticky top-0 z-20 flex items-start gap-3 border-b border-gray-100 bg-white px-3 py-3">
-          <button onClick={() => navigate({ to: "/" })} aria-label="Voltar" className="p-1.5">
+          <button onClick={() => navigate({ to: "/shark-aspirador-de-maos" })} aria-label="Voltar" className="p-1.5">
             <ArrowLeft size={24} strokeWidth={2} />
           </button>
           <div className="flex-1 text-center">
