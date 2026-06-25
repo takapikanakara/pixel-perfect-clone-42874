@@ -75,6 +75,7 @@ type TabId = (typeof TABS)[number]["id"];
 
 function ProductPage() {
   const navigate = useNavigate();
+  const navLoader = useNavigateWithLoader();
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
   const { qty: cartQty, add: addToCart } = useCart();
   const [addedToast, setAddedToast] = useState(false);
