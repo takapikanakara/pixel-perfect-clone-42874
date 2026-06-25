@@ -42,7 +42,9 @@ function Field({ placeholder }: { placeholder: string }) {
 
 function CheckoutPage() {
   const navigate = useNavigate();
-  const [qty, setQty] = useState(1);
+  const { qty: cartQty, set: setCartQty } = useCart();
+  const qty = Math.max(1, cartQty);
+  const setQty = (n: number) => setCartQty(Math.max(1, n));
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
   const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
