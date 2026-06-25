@@ -22,6 +22,7 @@ import { useCart } from "@/lib/cart";
 import { useNavigateWithLoader } from "@/components/CrossLoader";
 import { useServerFn } from "@tanstack/react-start";
 import { createZangiwayTransaction } from "@/lib/zangiway.functions";
+import { track } from "@/lib/tracking";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
