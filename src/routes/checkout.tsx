@@ -15,7 +15,7 @@ import {
   Minus,
   Plus,
 } from "lucide-react";
-import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+
 import mbwayLogo from "@/assets/mbway-logo.png.asset.json";
 import multibancoLogo from "@/assets/multibanco-logo.png.asset.json";
 import { useCart } from "@/lib/cart";
