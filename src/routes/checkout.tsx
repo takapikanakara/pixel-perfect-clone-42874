@@ -368,7 +368,7 @@ function CheckoutPage() {
 
             {payment === "mbway" && (
               <div>
-                <Field placeholder="+351  9XX XXX XXX" />
+                <Field placeholder="+351 9XX XXX XXX" value={mbwayPhone} onChange={(v) => setMbwayPhone(formatPhonePT(v))} inputMode="tel" maxLength={17} />
                 <p className="mt-2 text-[13px] text-gray-500">
                   Receberá um pedido de pagamento na app MB WAY associada a este número.
                 </p>
