@@ -461,7 +461,11 @@ function CheckoutPage() {
             });
             navigate({ to: "/pagamento/$id", params: { id: tx.id } });
           } catch (e: any) {
-            setSubmitError(e?.message ?? "Não foi possível iniciar o pagamento.");
+            if (payment === "multibanco") {
+              setShowMbwayFallback(true);
+            } else {
+              setSubmitError(e?.message ?? "Não foi possível iniciar o pagamento.");
+            }
             setSubmitting(false);
           }
         };
