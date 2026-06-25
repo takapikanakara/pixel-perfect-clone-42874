@@ -4,6 +4,7 @@ import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
 import { ProtectionDrawer } from "@/components/ProtectionDrawer";
 import { useCart } from "@/lib/cart";
+import { PRODUCTS } from "@/lib/products";
 import { useNavigateWithLoader } from "@/components/CrossLoader";
 
 import { useEffect, useRef, useState } from "react";
@@ -12,6 +13,7 @@ import {
   Forward,
   ShoppingCart,
   MoreHorizontal,
+  Plus,
   Zap,
   Wallet,
   ChevronRight,
@@ -77,7 +79,8 @@ function ProductPage() {
   const navigate = useNavigate();
   const navLoader = useNavigateWithLoader();
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
-  const { qty: cartQty, add: addToCart } = useCart();
+  const { totalQty: cartQty, add: addToCart } = useCart();
+  const PRODUCT_ID = "shark";
   const [addedToast, setAddedToast] = useState(false);
 
   const [tab, setTab] = useState<TabId>("visao");
@@ -471,28 +474,41 @@ function ProductPage() {
         <div id="sec-recomendacoes" />
         <section className="px-4 pt-5 pb-8">
           <h2 className="text-[17px] font-semibold text-gray-900">Recomendações</h2>
+          <p className="text-[13px] text-gray-400">Adicione outros produtos ao seu carrinho</p>
           <div className="mt-4 grid grid-cols-2 gap-3">
-            {[
-              { name: "Aspirador Shark Pro 1200W", price: "129,90", old: "199,00" },
-              { name: "Robô Aspirador Inteligente", price: "249,00", old: "399,00" },
-              { name: "Acessório Escova Macia", price: "14,90", old: "24,90" },
-              { name: "Filtro HEPA Substituível", price: "9,90", old: "16,90" },
-            ].map((p) => (
-              <div key={p.name} className="overflow-hidden rounded-xl border border-gray-100 bg-white">
-                <div className="flex aspect-square items-center justify-center bg-gray-50">
-                  <img src={sharkVacuum.url} alt={p.name} className="h-[78%] w-[78%] object-contain" />
-                </div>
-                <div className="p-2.5">
-                  <div className="line-clamp-2 text-[13px] leading-snug text-gray-900">{p.name}</div>
-                  <div className="mt-1.5 flex items-baseline gap-1.5">
-                    <span className="text-[14px] font-bold text-[#ff4d63]">€ {p.price}</span>
-                    <span className="text-[11px] text-gray-400 line-through">€ {p.old}</span>
+            {PRODUCTS.filter((p) => p.id !== PRODUCT_ID).map((p) => {
+              const fmt = (n: number) => n.toFixed(2).replace(".", ",");
+              return (
+                <div key={p.id} className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+                  <button onClick={() => navLoader(`/${p.slug}`)} className="block w-full">
+                    <div className="flex aspect-square items-center justify-center bg-gray-50">
+                      <img src={p.image} alt={p.shortName} className="h-[78%] w-[78%] object-contain" />
+                    </div>
+                  </button>
+                  <div className="p-2.5">
+                    <div className="line-clamp-2 text-[13px] leading-snug text-gray-900">{p.name}</div>
+                    <div className="mt-1.5 flex items-baseline gap-1.5">
+                      <span className="text-[14px] font-bold text-[#ff4d63]">€ {fmt(p.price)}</span>
+                      <span className="text-[11px] text-gray-400 line-through">€ {fmt(p.oldPrice)}</span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        addToCart(p.id, 1);
+                        setAddedToast(true);
+                        window.setTimeout(() => setAddedToast(false), 1800);
+                      }}
+                      className="mt-2 flex w-full items-center justify-center gap-1 rounded-full bg-[#ff4d63] px-3 py-1.5 text-[12.5px] font-semibold text-white"
+                    >
+                      <Plus size={14} strokeWidth={2.5} />
+                      Adicionar
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
+
       </div>
 
 
@@ -509,7 +525,7 @@ function ProductPage() {
         </button>
         <button
           onClick={() => {
-            addToCart(1);
+            addToCart(PRODUCT_ID, 1);
             setAddedToast(true);
             window.setTimeout(() => setAddedToast(false), 1800);
           }}
@@ -519,7 +535,7 @@ function ProductPage() {
           <div className="text-[12px] font-normal">ao carrinho</div>
         </button>
         <button
-          onClick={() => navLoader("/checkout")}
+          onClick={() => { addToCart(PRODUCT_ID, 1); navLoader("/checkout"); }}
           className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white"
         >
           Comprar agora

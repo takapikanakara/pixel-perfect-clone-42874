@@ -1,24 +1,61 @@
 import { useEffect, useState } from "react";
+import { PRODUCTS, getProduct, type Product } from "./products";
 
-const KEY = "cart_qty_v1";
+const KEY = "cart_items_v2";
+const LEGACY_KEY = "cart_qty_v1";
 
-function read(): number {
-  if (typeof window === "undefined") return 0;
-  const v = window.localStorage.getItem(KEY);
-  return v ? Math.max(0, parseInt(v, 10) || 0) : 0;
+export type CartItems = Record<string, number>;
+
+function read(): CartItems {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        const out: CartItems = {};
+        for (const [k, v] of Object.entries(parsed)) {
+          const n = Math.max(0, Math.floor(Number(v) || 0));
+          if (n > 0 && getProduct(k)) out[k] = n;
+        }
+        return out;
+      }
+    }
+    // legacy migration: old single-qty cart was the Shark vacuum
+    const legacy = window.localStorage.getItem(LEGACY_KEY);
+    if (legacy) {
+      const n = Math.max(0, parseInt(legacy, 10) || 0);
+      window.localStorage.removeItem(LEGACY_KEY);
+      if (n > 0) {
+        const migrated = { shark: n };
+        window.localStorage.setItem(KEY, JSON.stringify(migrated));
+        return migrated;
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return {};
 }
 
-function write(n: number) {
+function write(items: CartItems) {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(KEY, String(Math.max(0, n)));
+  const clean: CartItems = {};
+  for (const [k, v] of Object.entries(items)) {
+    const n = Math.max(0, Math.floor(Number(v) || 0));
+    if (n > 0) clean[k] = n;
+  }
+  window.localStorage.setItem(KEY, JSON.stringify(clean));
   window.dispatchEvent(new Event("cart:update"));
 }
 
+export type CartLine = { product: Product; qty: number };
+
 export function useCart() {
-  const [qty, setQty] = useState<number>(0);
+  const [items, setItems] = useState<CartItems>({});
 
   useEffect(() => {
-    const sync = () => setQty(read());
+    const sync = () => setItems(read());
     sync();
     window.addEventListener("cart:update", sync);
     window.addEventListener("storage", sync);
@@ -28,10 +65,44 @@ export function useCart() {
     };
   }, []);
 
+  const totalQty = Object.values(items).reduce((a, b) => a + b, 0);
+  const lines: CartLine[] = Object.entries(items)
+    .map(([id, qty]) => {
+      const product = getProduct(id);
+      return product ? { product, qty } : null;
+    })
+    .filter((x): x is CartLine => x !== null);
+  const subtotal = lines.reduce((acc, l) => acc + l.product.price * l.qty, 0);
+
   return {
-    qty,
-    add: (n = 1) => write(read() + n),
-    set: (n: number) => write(n),
-    remove: () => write(0),
+    items,
+    lines,
+    totalQty,
+    qty: totalQty, // backward compat
+    subtotal,
+    add: (productId: string, n = 1) => {
+      const current = read();
+      const next = { ...current, [productId]: (current[productId] || 0) + n };
+      write(next);
+    },
+    set: (productId: string, n: number) => {
+      const current = read();
+      const next = { ...current, [productId]: n };
+      if (n <= 0) delete next[productId];
+      write(next);
+    },
+    remove: (productId?: string) => {
+      if (productId === undefined) {
+        write({});
+        return;
+      }
+      const current = read();
+      delete current[productId];
+      write(current);
+    },
+    clear: () => write({}),
+    has: (productId: string) => (read()[productId] || 0) > 0,
   };
 }
+
+export { PRODUCTS };

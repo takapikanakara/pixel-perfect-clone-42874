@@ -15,7 +15,7 @@ import {
   Minus,
   Plus,
 } from "lucide-react";
-import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+
 import mbwayLogo from "@/assets/mbway-logo.png.asset.json";
 import multibancoLogo from "@/assets/multibanco-logo.png.asset.json";
 import { useCart } from "@/lib/cart";
@@ -94,9 +94,7 @@ function titleCase(v: string) {
 function CheckoutPage() {
   const navigate = useNavigate();
   const navLoader = useNavigateWithLoader();
-  const { qty: cartQty, set: setCartQty } = useCart();
-  const qty = Math.max(1, cartQty);
-  const setQty = (n: number) => setCartQty(Math.max(1, n));
+  const { lines, totalQty, subtotal: cartSubtotal, set: setLineQty, remove: removeLine } = useCart();
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
   const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
@@ -161,8 +159,9 @@ function CheckoutPage() {
   const ss = secondsLeft % 60;
   const timer = `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
 
-  const unit = 97.9;
-  const subtotal = unit * qty;
+  const subtotal = cartSubtotal;
+  const fullPriceTotal = lines.reduce((acc, l) => acc + l.product.oldPrice * l.qty, 0);
+  const discount = Math.max(0, fullPriceTotal - subtotal);
   const shippingCost = shipping === "expressa" ? 8 : 0;
   const total = subtotal + shippingCost;
   const fmt = (n: number) => n.toFixed(2).replace(".", ",");
@@ -223,47 +222,65 @@ function CheckoutPage() {
           }}
         />
 
-        {/* Product line */}
-        <section className="px-4 pt-4 pb-5">
-          <div className="flex gap-3">
-            <div className="flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-gray-50">
-              <img src={sharkVacuum.url} alt="Shark" className="h-[88%] w-[88%] object-contain" />
+        {/* Product lines */}
+        <section className="space-y-5 px-4 pt-4 pb-5">
+          {lines.length === 0 && (
+            <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-[14px] text-gray-500">
+              O seu carrinho está vazio.
             </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-start gap-2">
-                <div className="min-w-0 flex-1 text-[15px] leading-snug text-gray-900">
-                  Shark Aspirador de Mão sem Fios, Leve e...
+          )}
+          {lines.map(({ product, qty: lineQty }) => {
+            const pct = product.oldPrice > 0
+              ? Math.round((1 - product.price / product.oldPrice) * 100)
+              : 0;
+            return (
+              <div key={product.id} className="flex gap-3">
+                <div className="flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-gray-50">
+                  <img src={product.image} alt={product.shortName} className="h-[88%] w-[88%] object-contain" />
                 </div>
-                <div className="flex shrink-0 items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
-                  <button onClick={() => setQty(qty - 1)} aria-label="Diminuir">
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-4 text-center text-[14px] font-medium">{qty}</span>
-                  <button onClick={() => setQty(qty + 1)} aria-label="Aumentar">
-                    <Plus size={14} />
-                  </button>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start gap-2">
+                    <div className="min-w-0 flex-1 text-[15px] leading-snug text-gray-900 line-clamp-2">
+                      {product.name}
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
+                      <button
+                        onClick={() => (lineQty <= 1 ? removeLine(product.id) : setLineQty(product.id, lineQty - 1))}
+                        aria-label="Diminuir"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="w-4 text-center text-[14px] font-medium">{lineQty}</span>
+                      <button onClick={() => setLineQty(product.id, lineQty + 1)} aria-label="Aumentar">
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-[#ff4d63] px-2 py-0.5 text-[12px] font-bold text-white">
+                      Oferta Relâmpago <Zap size={12} fill="currentColor" />
+                    </span>
+                    <span className="text-[13px] font-bold text-[#ff4d63]">{timer}</span>
+                  </div>
+                  <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-gray-700">
+                    <RotateCw size={14} className="text-blue-500" strokeWidth={2.2} />
+                    Devolução gratuita
+                  </div>
+                  <div className="mt-1.5 text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(product.price * lineQty)}</div>
+                  <div className="mt-0.5 flex items-center gap-2">
+                    <span className="text-[13px] text-gray-400 line-through">€ {fmt(product.oldPrice * lineQty)}</span>
+                    {pct > 0 && (
+                      <span className="rounded-md bg-[#ffe5e9] px-1.5 py-0.5 text-[12px] font-bold text-[#ff4d63]">
+                        -{pct}%
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="mt-1.5 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#ff4d63] px-2 py-0.5 text-[12px] font-bold text-white">
-                  Oferta Relâmpago <Zap size={12} fill="currentColor" />
-                </span>
-                <span className="text-[13px] font-bold text-[#ff4d63]">{timer}</span>
-              </div>
-              <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-gray-700">
-                <RotateCw size={14} className="text-blue-500" strokeWidth={2.2} />
-                Devolução gratuita
-              </div>
-              <div className="mt-1.5 text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(unit)}</div>
-              <div className="mt-0.5 flex items-center gap-2">
-                <span className="text-[13px] text-gray-400 line-through">€ 355,00</span>
-                <span className="rounded-md bg-[#ffe5e9] px-1.5 py-0.5 text-[12px] font-bold text-[#ff4d63]">
-                  -72%
-                </span>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </section>
+
 
         {/* Opções de envio */}
         <section className="px-4 pb-5">
@@ -305,17 +322,19 @@ function CheckoutPage() {
         </section>
 
         {/* Desconto especial */}
-        <section className="px-4">
-          <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-            <div className="flex items-center gap-2.5">
-              <Ticket size={20} className="text-[#ff4d63]" />
-              <span className="text-[15px] text-gray-900">Desconto especial</span>
+        {discount > 0 && (
+          <section className="px-4">
+            <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+              <div className="flex items-center gap-2.5">
+                <Ticket size={20} className="text-[#ff4d63]" />
+                <span className="text-[15px] text-gray-900">Desconto especial</span>
+              </div>
+              <span className="rounded-md bg-[#ffe5e9] px-2 py-1 text-[14px] font-bold text-[#ff4d63]">
+                - € {fmt(discount)}
+              </span>
             </div>
-            <span className="rounded-md bg-[#ffe5e9] px-2 py-1 text-[14px] font-bold text-[#ff4d63]">
-              - € 257,10
-            </span>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Resumo */}
         <section className="mt-4 border-t border-gray-100 px-4 pt-4">
@@ -327,7 +346,7 @@ function CheckoutPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-[14.5px] text-gray-800">
                 <ShoppingBag size={18} className="text-gray-500" />
-                Subtotal ({qty} artigo{qty > 1 ? "s" : ""})
+                Subtotal ({totalQty} artigo{totalQty > 1 ? "s" : ""})
               </div>
               <span className="text-[14.5px] text-gray-900">€ {fmt(subtotal)}</span>
             </div>
@@ -446,7 +465,7 @@ function CheckoutPage() {
               data: {
                 amount: total,
                 method: payment,
-                paymentDescription: `Shark Aspirador x${qty}`,
+                paymentDescription: lines.map((l) => `${l.product.shortName} x${l.qty}`).join(", ") || "Encomenda",
                 payer: {
                   email,
                   name: nome,
@@ -471,7 +490,7 @@ function CheckoutPage() {
               <div className="mb-2 rounded-lg bg-[#fff0f2] px-3 py-2 text-[12.5px] text-[#ff4d63]">{submitError}</div>
             )}
             <div className="flex items-center justify-between pb-2">
-              <span className="text-[15px] font-bold text-gray-900">Total ({qty} artigo{qty > 1 ? "s" : ""})</span>
+              <span className="text-[15px] font-bold text-gray-900">Total ({totalQty} artigo{totalQty > 1 ? "s" : ""})</span>
               <span className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(total)}</span>
             </div>
             <button
