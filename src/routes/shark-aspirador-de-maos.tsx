@@ -4,6 +4,7 @@ import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
 import { ProtectionDrawer } from "@/components/ProtectionDrawer";
 import { useCart } from "@/lib/cart";
+import { PRODUCTS } from "@/lib/products";
 import { useNavigateWithLoader } from "@/components/CrossLoader";
 
 import { useEffect, useRef, useState } from "react";
