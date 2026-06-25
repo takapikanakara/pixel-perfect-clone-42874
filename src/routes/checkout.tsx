@@ -18,6 +18,8 @@ import {
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 import { useCart } from "@/lib/cart";
 import { useNavigateWithLoader } from "@/components/CrossLoader";
+import { useServerFn } from "@tanstack/react-start";
+import { createZangiwayTransaction } from "@/lib/zangiway.functions";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -110,6 +112,10 @@ function CheckoutPage() {
   const [cpLoading, setCpLoading] = useState(false);
   const [cpError, setCpError] = useState("");
   const [mbwayPhone, setMbwayPhone] = useState("");
+  const [nif, setNif] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const createTx = useServerFn(createZangiwayTransaction);
 
   useEffect(() => {
     const clean = cp.replace(/\D/g, "");
@@ -185,6 +191,7 @@ function CheckoutPage() {
             <Field placeholder="Nome completo" value={nome} onChange={(v) => setNome(titleCase(v))} />
             <Field placeholder="+351 912 345 678" value={telefone} onChange={(v) => setTelefone(formatPhonePT(v))} inputMode="tel" maxLength={17} />
             <Field placeholder="E-mail" value={email} onChange={(v) => setEmail(v.trim().toLowerCase())} inputMode="email" type="email" />
+            <Field placeholder="NIF (contribuinte)" value={nif} onChange={(v) => setNif(onlyDigits(v, 9))} inputMode="numeric" maxLength={9} />
             <div>
               <Field placeholder="Código postal (1234-567)" value={cp} onChange={(v) => setCp(formatCP(v))} inputMode="numeric" maxLength={8} />
               {cpLoading && <p className="mt-1 px-1 text-[12px] text-gray-500">A procurar morada…</p>}
@@ -422,6 +429,7 @@ function CheckoutPage() {
           nome.trim().length > 2 &&
           phoneDigits.length === 9 &&
           emailOk &&
+          nif.length === 9 &&
           cp.replace(/\D/g, "").length === 7 &&
           distrito.trim() &&
           cidade.trim() &&
@@ -429,28 +437,55 @@ function CheckoutPage() {
           morada.trim() &&
           numero.trim();
         const paymentOk = payment === "multibanco" || (payment === "mbway" && mbwayDigits.length === 9);
-        const canSubmit = Boolean(addressOk && paymentOk);
+        const canSubmit = Boolean(addressOk && paymentOk) && !submitting;
+        const handleSubmit = async () => {
+          if (!canSubmit) return;
+          setSubmitting(true);
+          setSubmitError("");
+          try {
+            const payerPhone = payment === "mbway" ? `+351${mbwayDigits}` : `+351${phoneDigits}`;
+            const tx = await createTx({
+              data: {
+                amount: total,
+                method: payment,
+                paymentDescription: `Shark Aspirador x${qty}`,
+                payer: {
+                  email,
+                  name: nome,
+                  document: nif,
+                  phone: payerPhone,
+                },
+              },
+            });
+            navigate({ to: "/pagamento/$id", params: { id: tx.id } });
+          } catch (e: any) {
+            setSubmitError(e?.message ?? "Não foi possível iniciar o pagamento.");
+            setSubmitting(false);
+          }
+        };
         return (
           <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-[480px] -translate-x-1/2 border-t border-gray-100 bg-white px-4 py-3">
+            {submitError && (
+              <div className="mb-2 rounded-lg bg-[#fff0f2] px-3 py-2 text-[12.5px] text-[#ff4d63]">{submitError}</div>
+            )}
             <div className="flex items-center justify-between pb-2">
               <span className="text-[15px] font-bold text-gray-900">Total ({qty} artigo{qty > 1 ? "s" : ""})</span>
               <span className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(total)}</span>
             </div>
             <button
               disabled={!canSubmit}
-              onClick={() => {
-                if (!canSubmit) return;
-                alert("Pagamento em breve — gateway será integrado.");
-              }}
+              onClick={handleSubmit}
               className={`w-full rounded-xl px-4 py-3 text-center transition-colors ${
                 canSubmit ? "bg-[#ff4d63]" : "bg-gray-100"
               }`}
             >
               <div className={`text-[16px] font-bold ${canSubmit ? "text-white" : "text-gray-500"}`}>
-                Finalizar encomenda
+                {submitting ? "A processar…" : "Finalizar encomenda"}
               </div>
               <div className={`text-[12px] ${canSubmit ? "text-white/90" : "text-gray-500"}`}>
-                {canSubmit
+                {submitting
+                  ? "Por favor aguarde"
+                  : canSubmit
                   ? payment === "mbway"
                     ? "Pagar com MB WAY"
                     : "Gerar referência Multibanco"
