@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Copy, Check, Loader2, ShieldCheck } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { getZangiwayTransaction, type TransactionInfo } from "@/lib/zangiway.functions";
 import { useCart } from "@/lib/cart";
+import { track } from "@/lib/tracking";
 
 export const Route = createFileRoute("/pagamento/$id")({
   head: () => ({
