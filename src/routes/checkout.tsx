@@ -31,13 +31,59 @@ export const Route = createFileRoute("/checkout")({
 type Shipping = "gratis" | "expressa";
 type Payment = "mbway" | "multibanco";
 
-function Field({ placeholder }: { placeholder: string }) {
+function Field({
+  placeholder,
+  value,
+  onChange,
+  inputMode,
+  maxLength,
+  type,
+}: {
+  placeholder: string;
+  value?: string;
+  onChange?: (v: string) => void;
+  inputMode?: "text" | "numeric" | "tel" | "email";
+  maxLength?: number;
+  type?: string;
+}) {
   return (
     <input
       placeholder={placeholder}
+      value={value}
+      type={type}
+      inputMode={inputMode}
+      maxLength={maxLength}
+      onChange={(e) => onChange?.(e.target.value)}
       className="w-full rounded-lg border border-gray-200 bg-gray-50/60 px-4 py-3.5 text-[15px] text-gray-900 placeholder:text-gray-400 outline-none focus:border-gray-400"
     />
   );
+}
+
+function formatPhonePT(v: string) {
+  const d = v.replace(/\D/g, "").replace(/^351/, "").slice(0, 9);
+  const p1 = d.slice(0, 3);
+  const p2 = d.slice(3, 6);
+  const p3 = d.slice(6, 9);
+  let rest = "";
+  if (p2) rest += " " + p2;
+  if (p3) rest += " " + p3;
+  return "+351 " + (p1 + rest).trim();
+}
+
+function formatCP(v: string) {
+  const d = v.replace(/\D/g, "").slice(0, 7);
+  if (d.length <= 4) return d;
+  return d.slice(0, 4) + "-" + d.slice(4);
+}
+
+function onlyDigits(v: string, max = 20) {
+  return v.replace(/\D/g, "").slice(0, max);
+}
+
+function titleCase(v: string) {
+  return v
+    .toLocaleLowerCase("pt-PT")
+    .replace(/(^|[\s'-])\p{L}/gu, (m) => m.toLocaleUpperCase("pt-PT"));
 }
 
 function CheckoutPage() {
