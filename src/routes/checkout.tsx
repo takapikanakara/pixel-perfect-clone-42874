@@ -16,6 +16,7 @@ import {
   Plus,
 } from "lucide-react";
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -41,7 +42,9 @@ function Field({ placeholder }: { placeholder: string }) {
 
 function CheckoutPage() {
   const navigate = useNavigate();
-  const [qty, setQty] = useState(1);
+  const { qty: cartQty, set: setCartQty } = useCart();
+  const qty = Math.max(1, cartQty);
+  const setQty = (n: number) => setCartQty(Math.max(1, n));
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
   const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
@@ -128,11 +131,11 @@ function CheckoutPage() {
                   Shark Aspirador de Mão sem Fios, Leve e...
                 </div>
                 <div className="flex shrink-0 items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
-                  <button onClick={() => setQty((v) => Math.max(1, v - 1))} aria-label="Diminuir">
+                  <button onClick={() => setQty(qty - 1)} aria-label="Diminuir">
                     <Minus size={14} />
                   </button>
                   <span className="w-4 text-center text-[14px] font-medium">{qty}</span>
-                  <button onClick={() => setQty((v) => v + 1)} aria-label="Aumentar">
+                  <button onClick={() => setQty(qty + 1)} aria-label="Aumentar">
                     <Plus size={14} />
                   </button>
                 </div>
