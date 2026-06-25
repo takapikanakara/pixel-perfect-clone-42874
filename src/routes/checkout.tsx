@@ -180,19 +180,23 @@ function CheckoutPage() {
             <h2 className="text-[17px] font-bold text-gray-900">Morada de entrega</h2>
           </div>
           <div className="mt-4 space-y-3">
-            <Field placeholder="Nome completo" />
-            <Field placeholder="+351  912 345 678" />
-            <Field placeholder="E-mail" />
-            <Field placeholder="Código postal (1234-567)" />
-            <div className="grid grid-cols-2 gap-3">
-              <Field placeholder="Distrito" />
-              <Field placeholder="Cidade" />
+            <Field placeholder="Nome completo" value={nome} onChange={(v) => setNome(titleCase(v))} />
+            <Field placeholder="+351 912 345 678" value={telefone} onChange={(v) => setTelefone(formatPhonePT(v))} inputMode="tel" maxLength={17} />
+            <Field placeholder="E-mail" value={email} onChange={(v) => setEmail(v.trim().toLowerCase())} inputMode="email" type="email" />
+            <div>
+              <Field placeholder="Código postal (1234-567)" value={cp} onChange={(v) => setCp(formatCP(v))} inputMode="numeric" maxLength={8} />
+              {cpLoading && <p className="mt-1 px-1 text-[12px] text-gray-500">A procurar morada…</p>}
+              {cpError && <p className="mt-1 px-1 text-[12px] text-[#ff4d63]">{cpError}</p>}
             </div>
-            <Field placeholder="Freguesia" />
-            <Field placeholder="Morada (rua, avenida...)" />
             <div className="grid grid-cols-2 gap-3">
-              <Field placeholder="Número" />
-              <Field placeholder="Complemento" />
+              <Field placeholder="Distrito" value={distrito} onChange={(v) => setDistrito(titleCase(v))} />
+              <Field placeholder="Cidade" value={cidade} onChange={(v) => setCidade(titleCase(v))} />
+            </div>
+            <Field placeholder="Freguesia" value={freguesia} onChange={(v) => setFreguesia(titleCase(v))} />
+            <Field placeholder="Morada (rua, avenida...)" value={morada} onChange={(v) => setMorada(titleCase(v))} />
+            <div className="grid grid-cols-2 gap-3">
+              <Field placeholder="Número" value={numero} onChange={(v) => setNumero(onlyDigits(v, 6))} inputMode="numeric" />
+              <Field placeholder="Complemento" value={complemento} onChange={setComplemento} />
             </div>
           </div>
         </section>
