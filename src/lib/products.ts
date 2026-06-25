@@ -1,6 +1,7 @@
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 import ninjaSlushi from "@/assets/ninja-slushi.webp.asset.json";
 import sharkFlexbreeze from "@/assets/shark-flexbreeze.jpg.asset.json";
+import roomba from "@/assets/roomba-105.jpg.asset.json";
 
 export type Product = {
   id: string;
@@ -39,6 +40,15 @@ export const PRODUCTS: Product[] = [
     price: 39,
     oldPrice: 113.91,
     image: sharkFlexbreeze.url,
+  },
+  {
+    id: "roomba-105",
+    slug: "aspirador-robo-irobot-roomba-105-combo",
+    name: "Aspirador Robô IROBOT Roomba 105 Combo (Autonomia: 120 min - Preto)",
+    shortName: "iRobot Roomba 105 Combo",
+    price: 39,
+    oldPrice: 149.99,
+    image: roomba.url,
   },
 ];
 
