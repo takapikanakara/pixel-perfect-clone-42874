@@ -131,11 +131,11 @@ function CheckoutPage() {
                   Shark Aspirador de Mão sem Fios, Leve e...
                 </div>
                 <div className="flex shrink-0 items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
-                  <button onClick={() => setQty((v) => Math.max(1, v - 1))} aria-label="Diminuir">
+                  <button onClick={() => setQty(qty - 1)} aria-label="Diminuir">
                     <Minus size={14} />
                   </button>
                   <span className="w-4 text-center text-[14px] font-medium">{qty}</span>
-                  <button onClick={() => setQty((v) => v + 1)} aria-label="Aumentar">
+                  <button onClick={() => setQty(qty + 1)} aria-label="Aumentar">
                     <Plus size={14} />
                   </button>
                 </div>
