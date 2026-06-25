@@ -445,8 +445,8 @@ function ProductPage() {
 
           <div className="mt-6 space-y-5">
             {[
-              { initial: "B", name: "Bernardo Silva", date: "22/06/2026", stars: 5 },
-              { initial: "J", name: "Joao Campos", date: "22/06/2026", stars: 4 },
+              { initial: "M", name: "Mariana Costa", date: "22/06/2026", stars: 5 },
+              { initial: "R", name: "Rui Pereira", date: "22/06/2026", stars: 4 },
             ].map((rev) => (
               <div key={rev.name} className="flex items-start gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-700 text-[15px] font-semibold text-white">
