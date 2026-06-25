@@ -141,7 +141,7 @@ function CheckoutPage() {
                 <span className="inline-flex items-center gap-1 rounded-md bg-[#ff4d63] px-2 py-0.5 text-[12px] font-bold text-white">
                   Oferta Relâmpago <Zap size={12} fill="currentColor" />
                 </span>
-                <span className="text-[13px] font-bold text-[#ff4d63]">00:03:45</span>
+                <span className="text-[13px] font-bold text-[#ff4d63]">{timer}</span>
               </div>
               <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-gray-700">
                 <RotateCw size={14} className="text-blue-500" strokeWidth={2.2} />
