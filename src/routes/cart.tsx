@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, Truck, Trash2, Minus, Plus, ShieldCheck, Check } from "lucide-react";
-import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
-import { useCart } from "@/lib/cart";
+import { ArrowLeft, Truck, Trash2, Minus, Plus, ShieldCheck, Check, Plus as PlusIcon } from "lucide-react";
+import { useCart, PRODUCTS } from "@/lib/cart";
 import { useNavigateWithLoader } from "@/components/CrossLoader";
 
 export const Route = createFileRoute("/cart")({
@@ -17,12 +16,11 @@ export const Route = createFileRoute("/cart")({
 function CartPage() {
   const navigate = useNavigate();
   const navLoader = useNavigateWithLoader();
-  const { qty, set, remove } = useCart();
-  const unit = 97.9;
-  const total = unit * qty;
+  const { lines, totalQty, subtotal, set, remove, add, has } = useCart();
   const fmt = (n: number) => n.toFixed(2).replace(".", ",");
+  const empty = totalQty <= 0;
 
-  const empty = qty <= 0;
+  const recommendations = PRODUCTS.filter((p) => !has(p.id));
 
   return (
     <div className="min-h-screen bg-[#f5f6f8]">
@@ -33,7 +31,7 @@ function CartPage() {
             <ArrowLeft size={24} strokeWidth={2} />
           </button>
           <div className="flex-1 text-center text-[17px] font-bold text-gray-900">
-            Carrinho ({qty})
+            Carrinho ({totalQty})
           </div>
           <div className="w-8" />
         </header>
@@ -65,7 +63,7 @@ function CartPage() {
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#ff4d63] text-white">
                   <Check size={14} strokeWidth={3} />
                 </span>
-                <span className="text-[16px] font-bold text-gray-900">Loja ({qty})</span>
+                <span className="text-[16px] font-bold text-gray-900">Loja ({totalQty})</span>
               </div>
             </div>
 
@@ -77,43 +75,46 @@ function CartPage() {
               </span>
             </div>
 
-            {/* Product row */}
-            <div className="mt-4 flex gap-3 px-4 pb-5">
-              <div className="flex shrink-0 items-start pt-10">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#ff4d63] text-white">
-                  <Check size={14} strokeWidth={3} />
-                </span>
-              </div>
-              <div className="flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-lg bg-white">
-                <img src={sharkVacuum.url} alt="Shark" className="h-[90%] w-[90%] object-contain" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="text-[14.5px] leading-snug text-gray-900">
-                  Shark Aspirador de Mão sem Fios, Leve e Portátil, com 600 g
-                </div>
-                <div className="mt-1 flex items-baseline gap-1">
-                  <span className="text-[13px] font-bold text-[#ff4d63]">€</span>
-                  <span className="text-[20px] font-extrabold text-[#ff4d63]">{fmt(total)}</span>
-                </div>
-                <div className="text-[12.5px] text-gray-400 line-through">€ {fmt(355 * qty)}</div>
-                <div className="mt-1.5 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-[13px] font-bold text-[#ff4d63]">-72%</span>
-                    <button onClick={() => remove()} aria-label="Remover">
-                      <Trash2 size={16} className="text-gray-500" />
-                    </button>
+            {/* Product lines */}
+            <div className="mt-4 space-y-5 px-4 pb-5">
+              {lines.map(({ product, qty }) => (
+                <div key={product.id} className="flex gap-3">
+                  <div className="flex shrink-0 items-start pt-10">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#ff4d63] text-white">
+                      <Check size={14} strokeWidth={3} />
+                    </span>
                   </div>
-                  <div className="flex items-center gap-3 rounded-md bg-gray-100 px-3 py-1.5">
-                    <button onClick={() => set(Math.max(1, qty - 1))} aria-label="Diminuir">
-                      <Minus size={16} className="text-gray-700" />
-                    </button>
-                    <span className="w-4 text-center text-[14px] font-semibold">{qty}</span>
-                    <button onClick={() => set(qty + 1)} aria-label="Aumentar">
-                      <Plus size={16} className="text-gray-700" />
-                    </button>
+                  <div className="flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-lg bg-white">
+                    <img src={product.image} alt={product.shortName} className="h-[90%] w-[90%] object-contain" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[14.5px] leading-snug text-gray-900 line-clamp-2">
+                      {product.name}
+                    </div>
+                    <div className="mt-1 flex items-baseline gap-1">
+                      <span className="text-[13px] font-bold text-[#ff4d63]">€</span>
+                      <span className="text-[20px] font-extrabold text-[#ff4d63]">{fmt(product.price * qty)}</span>
+                    </div>
+                    <div className="text-[12.5px] text-gray-400 line-through">€ {fmt(product.oldPrice * qty)}</div>
+                    <div className="mt-1.5 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <button onClick={() => remove(product.id)} aria-label="Remover">
+                          <Trash2 size={16} className="text-gray-500" />
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-3 rounded-md bg-gray-100 px-3 py-1.5">
+                        <button onClick={() => set(product.id, Math.max(1, qty - 1))} aria-label="Diminuir">
+                          <Minus size={16} className="text-gray-700" />
+                        </button>
+                        <span className="w-4 text-center text-[14px] font-semibold">{qty}</span>
+                        <button onClick={() => set(product.id, qty + 1)} aria-label="Aumentar">
+                          <Plus size={16} className="text-gray-700" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
 
             {/* Protecção do cliente */}
@@ -138,22 +139,43 @@ function CartPage() {
                 </div>
               </div>
             </div>
-
-            {/* Você pode gostar */}
-            <div className="border-t-[6px] border-gray-100 px-4 pt-5">
-              <h2 className="text-[17px] font-bold text-gray-900">Você pode gostar</h2>
-              <p className="text-[13px] text-gray-400">Recomendações para você</p>
-              <div className="mt-3 grid grid-cols-2 gap-3 pb-6">
-                {["Aspirador Shark Pro", "Robô Aspirador"].map((n) => (
-                  <div key={n} className="overflow-hidden rounded-xl bg-white">
-                    <div className="flex aspect-square items-center justify-center bg-gray-50">
-                      <img src={sharkVacuum.url} alt={n} className="h-[78%] w-[78%] object-contain" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </>
+        )}
+
+        {/* Você pode gostar */}
+        {recommendations.length > 0 && (
+          <div className="border-t-[6px] border-gray-100 px-4 pt-5">
+            <h2 className="text-[17px] font-bold text-gray-900">Você pode gostar</h2>
+            <p className="text-[13px] text-gray-400">Recomendações para você</p>
+            <div className="mt-3 grid grid-cols-2 gap-3 pb-6">
+              {recommendations.map((p) => (
+                <div key={p.id} className="overflow-hidden rounded-xl border border-gray-100 bg-white">
+                  <button
+                    onClick={() => navLoader(`/${p.slug}`)}
+                    className="block w-full"
+                  >
+                    <div className="flex aspect-square items-center justify-center bg-gray-50">
+                      <img src={p.image} alt={p.shortName} className="h-[78%] w-[78%] object-contain" />
+                    </div>
+                  </button>
+                  <div className="p-2.5">
+                    <div className="line-clamp-2 text-[13px] leading-snug text-gray-900">{p.name}</div>
+                    <div className="mt-1.5 flex items-baseline gap-1.5">
+                      <span className="text-[14px] font-bold text-[#ff4d63]">€ {fmt(p.price)}</span>
+                      <span className="text-[11px] text-gray-400 line-through">€ {fmt(p.oldPrice)}</span>
+                    </div>
+                    <button
+                      onClick={() => add(p.id, 1)}
+                      className="mt-2 flex w-full items-center justify-center gap-1 rounded-full bg-[#ff4d63] px-3 py-1.5 text-[12.5px] font-semibold text-white"
+                    >
+                      <PlusIcon size={14} strokeWidth={2.5} />
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
@@ -161,14 +183,14 @@ function CartPage() {
       {!empty && (
         <div className="fixed bottom-0 left-1/2 z-30 flex w-full max-w-[480px] -translate-x-1/2 items-center justify-between gap-3 border-t border-gray-100 bg-white px-4 py-3">
           <div>
-            <div className="text-[12px] text-gray-500">Total ({qty} item{qty > 1 ? "s" : ""}):</div>
-            <div className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(total)}</div>
+            <div className="text-[12px] text-gray-500">Total ({totalQty} item{totalQty > 1 ? "s" : ""}):</div>
+            <div className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(subtotal)}</div>
           </div>
           <button
             onClick={() => navLoader("/checkout")}
             className="flex-1 rounded-full bg-[#ff4d63] px-6 py-3.5 text-center text-[15px] font-bold text-white"
           >
-            Finalizar compra ({qty})
+            Finalizar compra ({totalQty})
           </button>
         </div>
       )}
