@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 export function CrossLoader() {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-white">
+    <div className="pointer-events-none fixed inset-0 z-[100] flex items-center justify-center bg-transparent">
       <div className="relative h-6 w-12">
         <span className="cross-dot cross-dot-pink absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#fe476c] mix-blend-multiply" />
         <span className="cross-dot cross-dot-blue absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#24CAF3] mix-blend-multiply" />
