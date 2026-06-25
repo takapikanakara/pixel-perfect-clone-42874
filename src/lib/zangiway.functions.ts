@@ -106,7 +106,7 @@ export const createZangiwayTransaction = createServerFn({ method: "POST" })
       }
       throw new Error(json?.message || `ZangiWay erro ${res.status}`);
     }
-    return {
+    const created: CreatedTransaction = {
       transactionID: json.transactionID ?? json.id,
       id: json.id ?? json.transactionID,
       amount: json.amount ?? json.value,
@@ -115,6 +115,27 @@ export const createZangiwayTransaction = createServerFn({ method: "POST" })
       generatedMBWay: json.generatedMBWay,
       createdAt: json.createdAt,
     };
+
+    // UTMify — Depósito Gerado (waiting_payment)
+    try {
+      const { forwardToUtmify } = await import("./utmify.server");
+      await forwardToUtmify(
+        {
+          id: created.id,
+          amount: created.amount ?? data.amount,
+          method: created.method ?? data.method,
+          currency: "EUR",
+          createdAt: created.createdAt ?? Date.now(),
+          paymentDescription: data.paymentDescription ?? "Encomenda",
+          customer: data.payer,
+        },
+        "waiting_payment",
+      );
+    } catch (e) {
+      console.error("[UTMify] waiting_payment forward failed", e);
+    }
+
+    return created;
   });
 
 export type TransactionInfo = {
