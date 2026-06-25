@@ -520,7 +520,7 @@ function ProductPage() {
           <div className="text-[12px] font-normal">ao carrinho</div>
         </button>
         <button
-          onClick={() => navLoader("/checkout")}
+          onClick={() => { addToCart(PRODUCT_ID, 1); navLoader("/checkout"); }}
           className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white"
         >
           Comprar agora
