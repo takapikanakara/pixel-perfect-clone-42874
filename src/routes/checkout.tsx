@@ -490,7 +490,7 @@ function CheckoutPage() {
               <div className="mb-2 rounded-lg bg-[#fff0f2] px-3 py-2 text-[12.5px] text-[#ff4d63]">{submitError}</div>
             )}
             <div className="flex items-center justify-between pb-2">
-              <span className="text-[15px] font-bold text-gray-900">Total ({qty} artigo{qty > 1 ? "s" : ""})</span>
+              <span className="text-[15px] font-bold text-gray-900">Total ({totalQty} artigo{totalQty > 1 ? "s" : ""})</span>
               <span className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(total)}</span>
             </div>
             <button
