@@ -14,6 +14,7 @@ import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirad
 import { Route as MaquinaDeGranizadosNinjaSlushiRouteImport } from './routes/maquina-de-granizados-ninja-slushi'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
+import { Route as AspiradorRoboIrobotRoomba105ComboRouteImport } from './routes/aspirador-robo-irobot-roomba-105-combo'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PagamentoIdRouteImport } from './routes/pagamento.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -46,6 +47,12 @@ const CartRoute = CartRouteImport.update({
   path: '/cart',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AspiradorRoboIrobotRoomba105ComboRoute =
+  AspiradorRoboIrobotRoomba105ComboRouteImport.update({
+    id: '/aspirador-robo-irobot-roomba-105-combo',
+    path: '/aspirador-robo-irobot-roomba-105-combo',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -70,6 +77,7 @@ const ApiPublicZangiwayWebhookRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
@@ -81,6 +89,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
@@ -93,6 +102,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
     | '/maquina-de-granizados-ninja-slushi'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
     | '/maquina-de-granizados-ninja-slushi'
@@ -128,6 +140,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
     | '/maquina-de-granizados-ninja-slushi'
@@ -140,6 +153,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AspiradorRoboIrobotRoomba105ComboRoute: typeof AspiradorRoboIrobotRoomba105ComboRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
   MaquinaDeGranizadosNinjaSlushiRoute: typeof MaquinaDeGranizadosNinjaSlushiRoute
@@ -187,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CartRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aspirador-robo-irobot-roomba-105-combo': {
+      id: '/aspirador-robo-irobot-roomba-105-combo'
+      path: '/aspirador-robo-irobot-roomba-105-combo'
+      fullPath: '/aspirador-robo-irobot-roomba-105-combo'
+      preLoaderRoute: typeof AspiradorRoboIrobotRoomba105ComboRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -220,6 +241,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AspiradorRoboIrobotRoomba105ComboRoute:
+    AspiradorRoboIrobotRoomba105ComboRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
   MaquinaDeGranizadosNinjaSlushiRoute: MaquinaDeGranizadosNinjaSlushiRoute,
