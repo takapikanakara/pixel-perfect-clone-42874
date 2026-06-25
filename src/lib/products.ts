@@ -1,0 +1,41 @@
+import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+import ninjaSlushi from "@/assets/ninja-slushi.webp.asset.json";
+
+export type Product = {
+  id: string;
+  slug: string;
+  name: string;
+  shortName: string;
+  price: number;
+  oldPrice: number;
+  image: string;
+};
+
+export const PRODUCTS: Product[] = [
+  {
+    id: "shark",
+    slug: "shark-aspirador-de-maos",
+    name: "Shark Aspirador de Mão sem Fios, Leve e Portátil, com 600 g",
+    shortName: "Shark Aspirador de Mão",
+    price: 97.9,
+    oldPrice: 355,
+    image: sharkVacuum.url,
+  },
+  {
+    id: "ninja-slushi",
+    slug: "maquina-de-granizados-ninja-slushi",
+    name: "Máquina de Granizados Ninja SLUSHi — Bebidas Geladas em Casa",
+    shortName: "Ninja SLUSHi",
+    price: 109.9,
+    oldPrice: 285,
+    image: ninjaSlushi.url,
+  },
+];
+
+export function getProduct(id: string): Product | undefined {
+  return PRODUCTS.find((p) => p.id === id);
+}
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return PRODUCTS.find((p) => p.slug === slug);
+}
