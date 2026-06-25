@@ -371,7 +371,7 @@ function ProductPage() {
                   Mario Kart World traz novos circuitos, novos personagens e o multijogador
                   online clássico. Diversão garantida para toda a família.
                 </p>
-                <ul className="list-disc space:y-1 pl-5">
+                <ul className="list-disc space-y-1 pl-5">
                   <li>Consola Nintendo Switch 2</li>
                   <li>Joy-Con 2 (par)</li>
                   <li>Código de descarga de Mario Kart World</li>
