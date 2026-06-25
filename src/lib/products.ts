@@ -3,6 +3,7 @@ import ninjaSlushi from "@/assets/ninja-slushi.webp.asset.json";
 import sharkFlexbreeze from "@/assets/shark-flexbreeze.jpg.asset.json";
 import roomba from "@/assets/roomba-105.jpg.asset.json";
 import switch2 from "@/assets/switch2-mariokart.webp.asset.json";
+import album from "@/assets/album-mundial-2026.png.asset.json";
 
 export type Product = {
   id: string;
@@ -59,6 +60,15 @@ export const PRODUCTS: Product[] = [
     price: 139.9,
     oldPrice: 489.99,
     image: switch2.url,
+  },
+  {
+    id: "album-mundial-2026",
+    slug: "album-mundial-2026-50-cromos",
+    name: "Álbum Mundial 2026 + 50 Cromos",
+    shortName: "Álbum Mundial 2026 + 50 Cromos",
+    price: 49.9,
+    oldPrice: 75,
+    image: album.url,
   },
 ];
 
