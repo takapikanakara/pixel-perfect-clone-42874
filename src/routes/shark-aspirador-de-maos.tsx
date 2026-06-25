@@ -13,6 +13,7 @@ import {
   Forward,
   ShoppingCart,
   MoreHorizontal,
+  Plus,
   Zap,
   Wallet,
   ChevronRight,
