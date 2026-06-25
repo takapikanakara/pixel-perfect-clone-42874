@@ -242,7 +242,7 @@ function ProductPage() {
               </span>
               <div className="flex items-end leading-none">
                 <span className="mb-0.5 text-[14px] font-semibold">€</span>
-                <span className="text-[26px] font-extrabold tracking-tight">97,90</span>
+                <span className="text-[26px] font-extrabold tracking-tight">109,90</span>
               </div>
               <svg
                 viewBox="0 0 24 24"
@@ -253,7 +253,7 @@ function ProductPage() {
                 <path d="M12 7v10" strokeDasharray="1.5 2" />
               </svg>
             </div>
-            <div className="ml-[42px] mt-0.5 text-[11px] line-through opacity-90">€ 355,00</div>
+            <div className="ml-[42px] mt-0.5 text-[11px] line-through opacity-90">€ 285,00</div>
           </div>
 
           <div className="relative flex flex-col items-end justify-center">
@@ -274,7 +274,7 @@ function ProductPage() {
         <button onClick={() => setInstallmentsOpen(true)} className="flex w-full items-center gap-3 border-b border-gray-100 px-4 py-3 text-left">
           <Wallet size={22} className="text-gray-800" />
           <span className="text-[14px] text-gray-900">
-            8x <span className="font-semibold">€ 12,24</span>{" "}
+            8x <span className="font-semibold">€ 13,74</span>{" "}
             <span className="font-semibold text-[#ff6a3d]">sem juros</span>
           </span>
           <ChevronRight size={18} className="ml-auto text-gray-400" />
