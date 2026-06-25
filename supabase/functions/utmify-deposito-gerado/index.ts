@@ -25,6 +25,7 @@ Deno.serve(async (req) => {
   }
   console.log("[Webhook Depósito Gerado]", JSON.stringify(body).slice(0, 1000));
 
-  const result = await forwardToUtmify(body, "waiting_payment");
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? req.headers.get("cf-connecting-ip");
+  const result = await forwardToUtmify(body, "waiting_payment", ip);
   return Response.json({ received: true, utmify: result }, { headers: corsHeaders });
 });
