@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 import { useCart } from "@/lib/cart";
+import { WithEntryLoader } from "@/components/CrossLoader";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -25,7 +26,11 @@ export const Route = createFileRoute("/checkout")({
       { name: "description", content: "Finalize a sua encomenda Shark com segurança." },
     ],
   }),
-  component: CheckoutPage,
+  component: () => (
+    <WithEntryLoader>
+      <CheckoutPage />
+    </WithEntryLoader>
+  ),
 });
 
 type Shipping = "gratis" | "expressa";

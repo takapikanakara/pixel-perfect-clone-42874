@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Truck, Trash2, Minus, Plus, ShieldCheck, Check } from "lucide-react";
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 import { useCart } from "@/lib/cart";
+import { WithEntryLoader } from "@/components/CrossLoader";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({
@@ -10,7 +11,11 @@ export const Route = createFileRoute("/cart")({
       { name: "description", content: "O seu carrinho de compras." },
     ],
   }),
-  component: CartPage,
+  component: () => (
+    <WithEntryLoader>
+      <CartPage />
+    </WithEntryLoader>
+  ),
 });
 
 function CartPage() {
