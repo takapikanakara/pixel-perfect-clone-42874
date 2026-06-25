@@ -222,47 +222,65 @@ function CheckoutPage() {
           }}
         />
 
-        {/* Product line */}
-        <section className="px-4 pt-4 pb-5">
-          <div className="flex gap-3">
-            <div className="flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-gray-50">
-              <img src={sharkVacuum.url} alt="Shark" className="h-[88%] w-[88%] object-contain" />
+        {/* Product lines */}
+        <section className="space-y-5 px-4 pt-4 pb-5">
+          {lines.length === 0 && (
+            <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50 px-4 py-6 text-center text-[14px] text-gray-500">
+              O seu carrinho está vazio.
             </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-start gap-2">
-                <div className="min-w-0 flex-1 text-[15px] leading-snug text-gray-900">
-                  Shark Aspirador de Mão sem Fios, Leve e...
+          )}
+          {lines.map(({ product, qty: lineQty }) => {
+            const pct = product.oldPrice > 0
+              ? Math.round((1 - product.price / product.oldPrice) * 100)
+              : 0;
+            return (
+              <div key={product.id} className="flex gap-3">
+                <div className="flex h-[110px] w-[110px] shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-gray-50">
+                  <img src={product.image} alt={product.shortName} className="h-[88%] w-[88%] object-contain" />
                 </div>
-                <div className="flex shrink-0 items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
-                  <button onClick={() => setQty(qty - 1)} aria-label="Diminuir">
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-4 text-center text-[14px] font-medium">{qty}</span>
-                  <button onClick={() => setQty(qty + 1)} aria-label="Aumentar">
-                    <Plus size={14} />
-                  </button>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start gap-2">
+                    <div className="min-w-0 flex-1 text-[15px] leading-snug text-gray-900 line-clamp-2">
+                      {product.name}
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2 rounded-full border border-gray-200 px-2 py-1">
+                      <button
+                        onClick={() => (lineQty <= 1 ? removeLine(product.id) : setLineQty(product.id, lineQty - 1))}
+                        aria-label="Diminuir"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="w-4 text-center text-[14px] font-medium">{lineQty}</span>
+                      <button onClick={() => setLineQty(product.id, lineQty + 1)} aria-label="Aumentar">
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-[#ff4d63] px-2 py-0.5 text-[12px] font-bold text-white">
+                      Oferta Relâmpago <Zap size={12} fill="currentColor" />
+                    </span>
+                    <span className="text-[13px] font-bold text-[#ff4d63]">{timer}</span>
+                  </div>
+                  <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-gray-700">
+                    <RotateCw size={14} className="text-blue-500" strokeWidth={2.2} />
+                    Devolução gratuita
+                  </div>
+                  <div className="mt-1.5 text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(product.price * lineQty)}</div>
+                  <div className="mt-0.5 flex items-center gap-2">
+                    <span className="text-[13px] text-gray-400 line-through">€ {fmt(product.oldPrice * lineQty)}</span>
+                    {pct > 0 && (
+                      <span className="rounded-md bg-[#ffe5e9] px-1.5 py-0.5 text-[12px] font-bold text-[#ff4d63]">
+                        -{pct}%
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="mt-1.5 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#ff4d63] px-2 py-0.5 text-[12px] font-bold text-white">
-                  Oferta Relâmpago <Zap size={12} fill="currentColor" />
-                </span>
-                <span className="text-[13px] font-bold text-[#ff4d63]">{timer}</span>
-              </div>
-              <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-gray-700">
-                <RotateCw size={14} className="text-blue-500" strokeWidth={2.2} />
-                Devolução gratuita
-              </div>
-              <div className="mt-1.5 text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(unit)}</div>
-              <div className="mt-0.5 flex items-center gap-2">
-                <span className="text-[13px] text-gray-400 line-through">€ 355,00</span>
-                <span className="rounded-md bg-[#ffe5e9] px-1.5 py-0.5 text-[12px] font-bold text-[#ff4d63]">
-                  -72%
-                </span>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </section>
+
 
         {/* Opções de envio */}
         <section className="px-4 pb-5">
