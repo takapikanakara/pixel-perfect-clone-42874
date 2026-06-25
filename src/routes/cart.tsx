@@ -27,7 +27,7 @@ function CartPage() {
       <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-white pb-28">
         {/* Header */}
         <header className="sticky top-0 z-20 flex items-center gap-2 bg-white px-3 py-3">
-          <button onClick={() => navigate({ to: "/" })} aria-label="Voltar" className="p-1.5">
+          <button onClick={() => navigate({ to: "/shark-aspirador-de-maos" })} aria-label="Voltar" className="p-1.5">
             <ArrowLeft size={24} strokeWidth={2} />
           </button>
           <div className="flex-1 text-center text-[17px] font-bold text-gray-900">
@@ -49,7 +49,7 @@ function CartPage() {
           <div className="flex flex-1 flex-col items-center justify-center px-6 py-20 text-center">
             <div className="text-[16px] font-semibold text-gray-900">O seu carrinho está vazio</div>
             <button
-              onClick={() => navigate({ to: "/" })}
+              onClick={() => navigate({ to: "/shark-aspirador-de-maos" })}
               className="mt-5 rounded-full bg-[#ff4d63] px-6 py-2.5 text-[14px] font-semibold text-white"
             >
               Continuar a comprar

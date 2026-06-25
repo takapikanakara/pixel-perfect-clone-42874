@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirador-de-maos'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const SharkAspiradorDeMaosRoute = SharkAspiradorDeMaosRouteImport.update({
+  id: '/shark-aspirador-de-maos',
+  path: '/shark-aspirador-de-maos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
@@ -52,25 +60,45 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cart' | '/checkout' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/shark-aspirador-de-maos'
+    | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cart' | '/checkout' | '/api/chat'
-  id: '__root__' | '/' | '/cart' | '/checkout' | '/api/chat'
+  to: '/' | '/cart' | '/checkout' | '/shark-aspirador-de-maos' | '/api/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/cart'
+    | '/checkout'
+    | '/shark-aspirador-de-maos'
+    | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  SharkAspiradorDeMaosRoute: typeof SharkAspiradorDeMaosRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shark-aspirador-de-maos': {
+      id: '/shark-aspirador-de-maos'
+      path: '/shark-aspirador-de-maos'
+      fullPath: '/shark-aspirador-de-maos'
+      preLoaderRoute: typeof SharkAspiradorDeMaosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout': {
       id: '/checkout'
       path: '/checkout'
@@ -106,6 +134,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  SharkAspiradorDeMaosRoute: SharkAspiradorDeMaosRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
