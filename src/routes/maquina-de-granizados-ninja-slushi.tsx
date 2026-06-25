@@ -507,7 +507,7 @@ function ProductPage() {
         </button>
         <button
           onClick={() => {
-            addToCart(1);
+            addToCart(PRODUCT_ID, 1);
             setAddedToast(true);
             window.setTimeout(() => setAddedToast(false), 1800);
           }}
