@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft,
   Lock,
@@ -22,6 +22,7 @@ import { useCart } from "@/lib/cart";
 import { useNavigateWithLoader } from "@/components/CrossLoader";
 import { useServerFn } from "@tanstack/react-start";
 import { createZangiwayTransaction } from "@/lib/zangiway.functions";
+import { track } from "@/lib/tracking";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -152,6 +153,25 @@ function CheckoutPage() {
     }, 1000);
     return () => clearInterval(id);
   }, []);
+
+  const checkoutFiredRef = useRef(false);
+  useEffect(() => {
+    if (lines.length === 0) return;
+    if (checkoutFiredRef.current) return;
+    checkoutFiredRef.current = true;
+    track("InitiateCheckout", {
+      contents: lines.map((l) => ({
+        content_id: l.product.id,
+        content_name: l.product.shortName,
+        content_type: "product",
+        quantity: l.qty,
+        price: l.product.price,
+      })),
+      value: cartSubtotal,
+      currency: "EUR",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lines.length]);
 
   const pad = (n: number) => String(n).padStart(2, "0");
   const hh = Math.floor(secondsLeft / 3600);
@@ -461,6 +481,18 @@ function CheckoutPage() {
           setSubmitError("");
           try {
             const payerPhone = payment === "mbway" ? `+351${mbwayDigits}` : `+351${phoneDigits}`;
+            track("PlaceAnOrder", {
+              contents: lines.map((l) => ({
+                content_id: l.product.id,
+                content_name: l.product.shortName,
+                content_type: "product",
+                quantity: l.qty,
+                price: l.product.price,
+              })),
+              value: total,
+              currency: "EUR",
+              user: { email, phone: payerPhone },
+            });
             const tx = await createTx({
               data: {
                 amount: total,

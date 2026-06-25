@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Copy, Check, Loader2, ShieldCheck } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
 import { getZangiwayTransaction, type TransactionInfo } from "@/lib/zangiway.functions";
 import { useCart } from "@/lib/cart";
+import { track } from "@/lib/tracking";
 
 export const Route = createFileRoute("/pagamento/$id")({
   head: () => ({
@@ -19,11 +20,14 @@ function PaymentPage() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
   const getInfo = useServerFn(getZangiwayTransaction);
-  const { remove } = useCart();
+  const { lines, remove } = useCart();
 
   const [info, setInfo] = useState<TransactionInfo | null>(null);
   const [error, setError] = useState<string>("");
   const [copied, setCopied] = useState<string>("");
+  const purchaseFiredRef = useRef(false);
+  const linesRef = useRef(lines);
+  linesRef.current = lines;
 
   useEffect(() => {
     let stop = false;
@@ -35,6 +39,20 @@ function PaymentPage() {
         setInfo(data);
         setError("");
         if (data.status === "COMPLETED") {
+          if (!purchaseFiredRef.current) {
+            purchaseFiredRef.current = true;
+            track("CompletePayment", {
+              contents: linesRef.current.map((l) => ({
+                content_id: l.product.id,
+                content_name: l.product.shortName,
+                content_type: "product",
+                quantity: l.qty,
+                price: l.product.price,
+              })),
+              value: data.amount,
+              currency: "EUR",
+            });
+          }
           remove();
           return; // stop polling
         }

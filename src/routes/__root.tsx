@@ -4,14 +4,17 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LoaderHost } from "@/components/CrossLoader";
+import { PRODUCTS } from "@/lib/products";
+import { track } from "@/lib/tracking";
 
 function NotFoundComponent() {
   return (
@@ -97,6 +100,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
     ],
+    scripts: [
+      // UTMify — captura de UTMs
+      {
+        src: "https://cdn.utmify.com.br/scripts/utms/latest.js",
+        async: true,
+        defer: true,
+        "data-utmify-prevent-xcod-sck": "",
+        "data-utmify-prevent-subids": "",
+      },
+      // UTMify TikTok Pixel loader (enriquecimento; o pixel base abaixo evita o ttq.page duplicado)
+      {
+        children: `window.tikTokPixelId="6a3c92f82dff985c7be78c67";var a=document.createElement("script");a.setAttribute("async","");a.setAttribute("defer","");a.setAttribute("src","https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");document.head.appendChild(a);`,
+      },
+      // TikTok Pixel base (mesmo pixel ID usado pela UTMify — eventos custom são enviados uma única vez via lib/tracking com event_id)
+      {
+        children: `!function (w, d, t) {w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};ttq.load('D8U396RC77U9VN47P3OG');ttq.page();}(window, document, 'ttq');`,
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -120,6 +141,30 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const lastViewedRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const slug = pathname.replace(/^\//, "");
+    const product = PRODUCTS.find((p) => p.slug === slug);
+    if (!product) return;
+    if (lastViewedRef.current === product.id) return;
+    lastViewedRef.current = product.id;
+    track("ViewContent", {
+      contents: [
+        {
+          content_id: product.id,
+          content_name: product.shortName,
+          content_type: "product",
+          quantity: 1,
+          price: product.price,
+        },
+      ],
+      value: product.price,
+      currency: "EUR",
+    });
+  }, [pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
