@@ -481,6 +481,18 @@ function CheckoutPage() {
           setSubmitError("");
           try {
             const payerPhone = payment === "mbway" ? `+351${mbwayDigits}` : `+351${phoneDigits}`;
+            track("PlaceAnOrder", {
+              contents: lines.map((l) => ({
+                content_id: l.product.id,
+                content_name: l.product.shortName,
+                content_type: "product",
+                quantity: l.qty,
+                price: l.product.price,
+              })),
+              value: total,
+              currency: "EUR",
+              user: { email, phone: payerPhone },
+            });
             const tx = await createTx({
               data: {
                 amount: total,
