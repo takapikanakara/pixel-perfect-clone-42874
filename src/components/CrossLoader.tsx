@@ -41,9 +41,8 @@ export function useNavigateWithLoader() {
   return (to: string) => {
     loaderStore.show();
     setTimeout(() => {
+      loaderStore.hide();
       navigate({ to });
-      // hide shortly after navigation so the destination renders cleanly
-      setTimeout(() => loaderStore.hide(), 50);
     }, LOADER_MS);
   };
 }
