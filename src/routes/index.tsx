@@ -1,5 +1,14 @@
-import { createFileRoute, Navigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/")({
-  component: () => <Navigate to="/shark-aspirador-de-maos" replace />,
+  component: IndexRedirect,
 });
+
+function IndexRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate({ to: "/shark-aspirador-de-maos", replace: true });
+  }, [navigate]);
+  return null;
+}
