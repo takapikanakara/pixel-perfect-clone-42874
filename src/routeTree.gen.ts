@@ -22,6 +22,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PagamentoIdRouteImport } from './routes/pagamento.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiPublicZangiwayWebhookRouteImport } from './routes/api/public/zangiway-webhook'
+import { Route as ApiPublicUtmifyDepositoPagoRouteImport } from './routes/api/public/utmify-deposito-pago'
+import { Route as ApiPublicUtmifyDepositoGeradoRouteImport } from './routes/api/public/utmify-deposito-gerado'
 import { Route as ApiPublicTiktokCapiRouteImport } from './routes/api/public/tiktok-capi'
 
 const SharkVentoinhaFlexbreezeHydrogoRoute =
@@ -96,6 +98,18 @@ const ApiPublicZangiwayWebhookRoute =
     path: '/api/public/zangiway-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicUtmifyDepositoPagoRoute =
+  ApiPublicUtmifyDepositoPagoRouteImport.update({
+    id: '/api/public/utmify-deposito-pago',
+    path: '/api/public/utmify-deposito-pago',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicUtmifyDepositoGeradoRoute =
+  ApiPublicUtmifyDepositoGeradoRouteImport.update({
+    id: '/api/public/utmify-deposito-gerado',
+    path: '/api/public/utmify-deposito-gerado',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicTiktokCapiRoute = ApiPublicTiktokCapiRouteImport.update({
   id: '/api/public/tiktok-capi',
   path: '/api/public/tiktok-capi',
@@ -116,6 +130,8 @@ export interface FileRoutesByFullPath {
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/tiktok-capi': typeof ApiPublicTiktokCapiRoute
+  '/api/public/utmify-deposito-gerado': typeof ApiPublicUtmifyDepositoGeradoRoute
+  '/api/public/utmify-deposito-pago': typeof ApiPublicUtmifyDepositoPagoRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -132,6 +148,8 @@ export interface FileRoutesByTo {
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/tiktok-capi': typeof ApiPublicTiktokCapiRoute
+  '/api/public/utmify-deposito-gerado': typeof ApiPublicUtmifyDepositoGeradoRoute
+  '/api/public/utmify-deposito-pago': typeof ApiPublicUtmifyDepositoPagoRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRoutesById {
@@ -149,6 +167,8 @@ export interface FileRoutesById {
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/tiktok-capi': typeof ApiPublicTiktokCapiRoute
+  '/api/public/utmify-deposito-gerado': typeof ApiPublicUtmifyDepositoGeradoRoute
+  '/api/public/utmify-deposito-pago': typeof ApiPublicUtmifyDepositoPagoRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRouteTypes {
@@ -167,6 +187,8 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/pagamento/$id'
     | '/api/public/tiktok-capi'
+    | '/api/public/utmify-deposito-gerado'
+    | '/api/public/utmify-deposito-pago'
     | '/api/public/zangiway-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -183,6 +205,8 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/pagamento/$id'
     | '/api/public/tiktok-capi'
+    | '/api/public/utmify-deposito-gerado'
+    | '/api/public/utmify-deposito-pago'
     | '/api/public/zangiway-webhook'
   id:
     | '__root__'
@@ -199,6 +223,8 @@ export interface FileRouteTypes {
     | '/api/chat'
     | '/pagamento/$id'
     | '/api/public/tiktok-capi'
+    | '/api/public/utmify-deposito-gerado'
+    | '/api/public/utmify-deposito-pago'
     | '/api/public/zangiway-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -216,6 +242,8 @@ export interface RootRouteChildren {
   ApiChatRoute: typeof ApiChatRoute
   PagamentoIdRoute: typeof PagamentoIdRoute
   ApiPublicTiktokCapiRoute: typeof ApiPublicTiktokCapiRoute
+  ApiPublicUtmifyDepositoGeradoRoute: typeof ApiPublicUtmifyDepositoGeradoRoute
+  ApiPublicUtmifyDepositoPagoRoute: typeof ApiPublicUtmifyDepositoPagoRoute
   ApiPublicZangiwayWebhookRoute: typeof ApiPublicZangiwayWebhookRoute
 }
 
@@ -312,6 +340,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicZangiwayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/utmify-deposito-pago': {
+      id: '/api/public/utmify-deposito-pago'
+      path: '/api/public/utmify-deposito-pago'
+      fullPath: '/api/public/utmify-deposito-pago'
+      preLoaderRoute: typeof ApiPublicUtmifyDepositoPagoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/utmify-deposito-gerado': {
+      id: '/api/public/utmify-deposito-gerado'
+      path: '/api/public/utmify-deposito-gerado'
+      fullPath: '/api/public/utmify-deposito-gerado'
+      preLoaderRoute: typeof ApiPublicUtmifyDepositoGeradoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/tiktok-capi': {
       id: '/api/public/tiktok-capi'
       path: '/api/public/tiktok-capi'
@@ -339,6 +381,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiChatRoute: ApiChatRoute,
   PagamentoIdRoute: PagamentoIdRoute,
   ApiPublicTiktokCapiRoute: ApiPublicTiktokCapiRoute,
+  ApiPublicUtmifyDepositoGeradoRoute: ApiPublicUtmifyDepositoGeradoRoute,
+  ApiPublicUtmifyDepositoPagoRoute: ApiPublicUtmifyDepositoPagoRoute,
   ApiPublicZangiwayWebhookRoute: ApiPublicZangiwayWebhookRoute,
 }
 export const routeTree = rootRouteImport
