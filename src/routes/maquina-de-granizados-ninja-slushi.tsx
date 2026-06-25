@@ -293,9 +293,9 @@ function ProductPage() {
           <div className="mt-2 flex items-center gap-2 text-[13px]">
             <Star size={16} className="fill-[#f5b400] text-[#f5b400]" />
             <span className="font-semibold text-gray-900">5,0</span>
-            <span className="text-[#1c7ed6]">(343)</span>
+            <span className="text-[#1c7ed6]">(650)</span>
             <span className="text-gray-300">|</span>
-            <span className="text-gray-500">1324 vendidos</span>
+            <span className="text-gray-500">2314 vendidos</span>
           </div>
         </section>
 
@@ -445,8 +445,8 @@ function ProductPage() {
 
           <div className="mt-6 space-y-5">
             {[
-              { initial: "B", name: "Bernardo Silva", date: "22/06/2026", stars: 5 },
-              { initial: "J", name: "Joao Campos", date: "22/06/2026", stars: 4 },
+              { initial: "M", name: "Mariana Costa", date: "22/06/2026", stars: 5 },
+              { initial: "R", name: "Rui Pereira", date: "22/06/2026", stars: 4 },
             ].map((rev) => (
               <div key={rev.name} className="flex items-start gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-700 text-[15px] font-semibold text-white">
