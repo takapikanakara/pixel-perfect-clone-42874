@@ -154,6 +154,25 @@ function CheckoutPage() {
     return () => clearInterval(id);
   }, []);
 
+  const checkoutFiredRef = useState(false);
+  useEffect(() => {
+    if (lines.length === 0) return;
+    if ((checkoutFiredRef[0] as any)) return;
+    checkoutFiredRef[1](true as any);
+    track("InitiateCheckout", {
+      contents: lines.map((l) => ({
+        content_id: l.product.id,
+        content_name: l.product.shortName,
+        content_type: "product",
+        quantity: l.qty,
+        price: l.product.price,
+      })),
+      value: cartSubtotal,
+      currency: "EUR",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lines.length]);
+
   const pad = (n: number) => String(n).padStart(2, "0");
   const hh = Math.floor(secondsLeft / 3600);
   const mm = Math.floor((secondsLeft % 3600) / 60);
