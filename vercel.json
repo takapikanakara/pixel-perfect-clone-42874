@@ -1,8 +1,1 @@
-{
-  "rewrites": [
-    {
-      "source": "/__l5e/assets-v1/:path*",
-      "destination": "https://pixel-perfect-clone-42874.lovable.app/__l5e/assets-v1/:path*"
-    }
-  ]
-}
+{}
