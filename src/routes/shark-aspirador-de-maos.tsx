@@ -162,7 +162,7 @@ function ProductPage() {
           >
             <img src={shareIcon.url} alt="Compartilhar" className="h-10 w-10 object-contain" />
           </button>
-          <button onClick={() => navigate({ to: "/cart" })} className="relative p-1.5">
+          <button onClick={() => navLoader("/cart")} className="relative p-1.5">
             <ShoppingCart size={22} strokeWidth={1.8} />
             {cartQty > 0 && (
               <span className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#ff4d63] px-1 text-[11px] font-bold leading-none text-white">
