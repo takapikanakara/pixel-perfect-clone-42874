@@ -16,6 +16,7 @@ import { Route as ConsolaNintendoSwitch2MarioKartWorldRouteImport } from './rout
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AspiradorRoboIrobotRoomba105ComboRouteImport } from './routes/aspirador-robo-irobot-roomba-105-combo'
+import { Route as AlbumMundial202650CromosRouteImport } from './routes/album-mundial-2026-50-cromos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PagamentoIdRouteImport } from './routes/pagamento.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
@@ -60,6 +61,12 @@ const AspiradorRoboIrobotRoomba105ComboRoute =
     path: '/aspirador-robo-irobot-roomba-105-combo',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AlbumMundial202650CromosRoute =
+  AlbumMundial202650CromosRouteImport.update({
+    id: '/album-mundial-2026-50-cromos',
+    path: '/album-mundial-2026-50-cromos',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -84,6 +91,7 @@ const ApiPublicZangiwayWebhookRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/album-mundial-2026-50-cromos': typeof AlbumMundial202650CromosRoute
   '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
@@ -97,6 +105,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/album-mundial-2026-50-cromos': typeof AlbumMundial202650CromosRoute
   '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
@@ -111,6 +120,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/album-mundial-2026-50-cromos': typeof AlbumMundial202650CromosRoute
   '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/album-mundial-2026-50-cromos'
     | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/album-mundial-2026-50-cromos'
     | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
@@ -152,6 +164,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/album-mundial-2026-50-cromos'
     | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
@@ -166,6 +179,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlbumMundial202650CromosRoute: typeof AlbumMundial202650CromosRoute
   AspiradorRoboIrobotRoomba105ComboRoute: typeof AspiradorRoboIrobotRoomba105ComboRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
@@ -229,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AspiradorRoboIrobotRoomba105ComboRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/album-mundial-2026-50-cromos': {
+      id: '/album-mundial-2026-50-cromos'
+      path: '/album-mundial-2026-50-cromos'
+      fullPath: '/album-mundial-2026-50-cromos'
+      preLoaderRoute: typeof AlbumMundial202650CromosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -262,6 +283,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlbumMundial202650CromosRoute: AlbumMundial202650CromosRoute,
   AspiradorRoboIrobotRoomba105ComboRoute:
     AspiradorRoboIrobotRoomba105ComboRoute,
   CartRoute: CartRoute,
