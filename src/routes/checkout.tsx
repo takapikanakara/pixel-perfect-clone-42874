@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Lock,
@@ -44,6 +44,20 @@ function CheckoutPage() {
   const [qty, setQty] = useState(1);
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
+  const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSecondsLeft((s) => (s > 0 ? s - 1 : 0));
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const hh = Math.floor(secondsLeft / 3600);
+  const mm = Math.floor((secondsLeft % 3600) / 60);
+  const ss = secondsLeft % 60;
+  const timer = `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
 
   const unit = 97.9;
   const subtotal = unit * qty;
@@ -127,7 +141,7 @@ function CheckoutPage() {
                 <span className="inline-flex items-center gap-1 rounded-md bg-[#ff4d63] px-2 py-0.5 text-[12px] font-bold text-white">
                   Oferta Relâmpago <Zap size={12} fill="currentColor" />
                 </span>
-                <span className="text-[13px] font-bold text-[#ff4d63]">00:03:45</span>
+                <span className="text-[13px] font-bold text-[#ff4d63]">{timer}</span>
               </div>
               <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-gray-700">
                 <RotateCw size={14} className="text-blue-500" strokeWidth={2.2} />
