@@ -476,31 +476,22 @@ function ProductPage() {
             {PRODUCTS.filter((p) => p.id !== PRODUCT_ID).map((p) => {
               const fmt = (n: number) => n.toFixed(2).replace(".", ",");
               return (
-                <div key={p.id} className="overflow-hidden rounded-xl border border-gray-100 bg-white">
-                  <button onClick={() => navLoader(`/${p.slug}`)} className="block w-full">
-                    <div className="flex aspect-square items-center justify-center bg-gray-50">
-                      <img src={p.image} alt={p.shortName} className="h-[78%] w-[78%] object-contain" />
-                    </div>
-                  </button>
+                <button
+                  key={p.id}
+                  onClick={() => navLoader(`/${p.slug}`)}
+                  className="overflow-hidden rounded-xl border border-gray-100 bg-white text-left"
+                >
+                  <div className="flex aspect-square items-center justify-center bg-gray-50">
+                    <img src={p.image} alt={p.shortName} className="h-[78%] w-[78%] object-contain" />
+                  </div>
                   <div className="p-2.5">
                     <div className="line-clamp-2 text-[13px] leading-snug text-gray-900">{p.name}</div>
                     <div className="mt-1.5 flex items-baseline gap-1.5">
                       <span className="text-[14px] font-bold text-[#ff4d63]">€ {fmt(p.price)}</span>
                       <span className="text-[11px] text-gray-400 line-through">€ {fmt(p.oldPrice)}</span>
                     </div>
-                    <button
-                      onClick={() => {
-                        addToCart(p.id, 1);
-                        setAddedToast(true);
-                        window.setTimeout(() => setAddedToast(false), 1800);
-                      }}
-                      className="mt-2 flex w-full items-center justify-center gap-1 rounded-full bg-[#ff4d63] px-3 py-1.5 text-[12.5px] font-semibold text-white"
-                    >
-                      <Plus size={14} strokeWidth={2.5} />
-                      Adicionar
-                    </button>
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>
