@@ -16,6 +16,7 @@ import {
   Plus,
 } from "lucide-react";
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
