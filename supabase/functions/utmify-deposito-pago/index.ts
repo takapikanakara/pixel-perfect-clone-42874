@@ -32,6 +32,7 @@ Deno.serve(async (req) => {
   if (status === "DECLINED" || status === "REFUSED" || status === "FAILED") utmStatus = "refused";
   else if (status === "REFUNDED") utmStatus = "refunded";
 
-  const result = await forwardToUtmify(body, utmStatus);
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? req.headers.get("cf-connecting-ip");
+  const result = await forwardToUtmify(body, utmStatus, ip);
   return Response.json({ received: true, utmify: result }, { headers: corsHeaders });
 });
