@@ -94,9 +94,7 @@ function titleCase(v: string) {
 function CheckoutPage() {
   const navigate = useNavigate();
   const navLoader = useNavigateWithLoader();
-  const { qty: cartQty, set: setCartQty } = useCart();
-  const qty = Math.max(1, cartQty);
-  const setQty = (n: number) => setCartQty(Math.max(1, n));
+  const { lines, totalQty, subtotal: cartSubtotal, set: setLineQty, remove: removeLine } = useCart();
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
   const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
