@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   Search,
   ShoppingCart,
+  Plus,
   MoreHorizontal,
   Zap,
   Wallet,
