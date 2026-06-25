@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirador-de-maos'
+import { Route as MaquinaDeGranizadosNinjaSlushiRouteImport } from './routes/maquina-de-granizados-ninja-slushi'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,6 +23,12 @@ const SharkAspiradorDeMaosRoute = SharkAspiradorDeMaosRouteImport.update({
   path: '/shark-aspirador-de-maos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MaquinaDeGranizadosNinjaSlushiRoute =
+  MaquinaDeGranizadosNinjaSlushiRouteImport.update({
+    id: '/maquina-de-granizados-ninja-slushi',
+    path: '/maquina-de-granizados-ninja-slushi',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
@@ -77,6 +86,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/checkout'
+    | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
     | '/api/chat'
     | '/pagamento/$id'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/checkout'
+    | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
     | '/api/chat'
     | '/pagamento/$id'
@@ -106,6 +118,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/checkout'
+    | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
     | '/api/chat'
     | '/pagamento/$id'
@@ -116,6 +129,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  MaquinaDeGranizadosNinjaSlushiRoute: typeof MaquinaDeGranizadosNinjaSlushiRoute
   SharkAspiradorDeMaosRoute: typeof SharkAspiradorDeMaosRoute
   ApiChatRoute: typeof ApiChatRoute
   PagamentoIdRoute: typeof PagamentoIdRoute
@@ -129,6 +143,13 @@ declare module '@tanstack/react-router' {
       path: '/shark-aspirador-de-maos'
       fullPath: '/shark-aspirador-de-maos'
       preLoaderRoute: typeof SharkAspiradorDeMaosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maquina-de-granizados-ninja-slushi': {
+      id: '/maquina-de-granizados-ninja-slushi'
+      path: '/maquina-de-granizados-ninja-slushi'
+      fullPath: '/maquina-de-granizados-ninja-slushi'
+      preLoaderRoute: typeof MaquinaDeGranizadosNinjaSlushiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -180,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  MaquinaDeGranizadosNinjaSlushiRoute: MaquinaDeGranizadosNinjaSlushiRoute,
   SharkAspiradorDeMaosRoute: SharkAspiradorDeMaosRoute,
   ApiChatRoute: ApiChatRoute,
   PagamentoIdRoute: PagamentoIdRoute,
