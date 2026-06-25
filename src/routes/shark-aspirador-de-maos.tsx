@@ -424,7 +424,6 @@ function ProductPage() {
               <div className="mt-2">
                 <Stars value={5} size={14} />
               </div>
-              <div className="mt-2 text-[13px] text-gray-500">3 avaliações</div>
             </div>
             <div className="flex-1 space-y-1.5 pt-1">
               {[
