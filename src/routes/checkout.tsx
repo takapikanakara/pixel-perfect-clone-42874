@@ -346,7 +346,7 @@ function CheckoutPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-[14.5px] text-gray-800">
                 <ShoppingBag size={18} className="text-gray-500" />
-                Subtotal ({qty} artigo{qty > 1 ? "s" : ""})
+                Subtotal ({totalQty} artigo{totalQty > 1 ? "s" : ""})
               </div>
               <span className="text-[14.5px] text-gray-900">€ {fmt(subtotal)}</span>
             </div>
