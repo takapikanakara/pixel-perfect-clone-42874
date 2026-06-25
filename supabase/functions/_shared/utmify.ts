@@ -43,6 +43,7 @@ function mapPaymentMethod(value: any): "pix" | "credit_card" | "billet" | "free_
 export async function forwardToUtmify(
   rawBody: AnyRecord,
   status: UtmifyStatus,
+  fallbackIp?: string | null,
 ): Promise<{ ok: boolean; status: number; body: string }> {
   const token = Deno.env.get("UTMIFY_API_TOKEN");
   if (!token) {
