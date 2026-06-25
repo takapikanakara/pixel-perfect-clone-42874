@@ -4,6 +4,7 @@ import { InstallmentsDrawer } from "@/components/InstallmentsDrawer";
 import { ShippingDrawer } from "@/components/ShippingDrawer";
 import { ProtectionDrawer } from "@/components/ProtectionDrawer";
 import { useCart } from "@/lib/cart";
+import { useNavigateWithLoader } from "@/components/CrossLoader";
 
 import { useEffect, useRef, useState } from "react";
 import {
@@ -74,6 +75,7 @@ type TabId = (typeof TABS)[number]["id"];
 
 function ProductPage() {
   const navigate = useNavigate();
+  const navLoader = useNavigateWithLoader();
   const countdown = useCountdown(3 * 3600 + 45 * 60 + 36);
   const { qty: cartQty, add: addToCart } = useCart();
   const [addedToast, setAddedToast] = useState(false);
@@ -160,7 +162,7 @@ function ProductPage() {
           >
             <img src={shareIcon.url} alt="Compartilhar" className="h-10 w-10 object-contain" />
           </button>
-          <button onClick={() => navigate({ to: "/cart" })} className="relative p-1.5">
+          <button onClick={() => navLoader("/cart")} className="relative p-1.5">
             <ShoppingCart size={22} strokeWidth={1.8} />
             {cartQty > 0 && (
               <span className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#ff4d63] px-1 text-[11px] font-bold leading-none text-white">
@@ -517,7 +519,7 @@ function ProductPage() {
           <div className="text-[12px] font-normal">ao carrinho</div>
         </button>
         <button
-          onClick={() => navigate({ to: "/checkout" })}
+          onClick={() => navLoader("/checkout")}
           className="flex-1 rounded-full bg-[#ff4d63] px-3 py-2.5 text-center text-[14px] font-semibold leading-tight text-white"
         >
           Comprar agora

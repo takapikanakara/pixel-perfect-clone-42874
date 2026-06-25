@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, type ReactNode } from "react";
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useNavigate } from "@tanstack/react-router";
 
 export function CrossLoader() {
@@ -18,36 +18,50 @@ export function CrossLoader() {
   );
 }
 
-export function WithEntryLoader({ children, ms = 2000 }: { children: ReactNode; ms?: number }) {
-  const [entering, setEntering] = useState(true);
-  const [leaving, setLeaving] = useState(false);
-  const navigate = useNavigate();
+// Global loader store — visible from anywhere without a provider
+let visible = false;
+const listeners = new Set<() => void>();
+function emit() { listeners.forEach((l) => l()); }
+export const loaderStore = {
+  subscribe(l: () => void) { listeners.add(l); return () => { listeners.delete(l); }; },
+  get() { return visible; },
+  show() { visible = true; emit(); },
+  hide() { visible = false; emit(); },
+};
 
-  useEffect(() => {
-    const id = setTimeout(() => setEntering(false), ms);
-    return () => clearTimeout(id);
-  }, [ms]);
-
-  const navigateWithLoader = useCallback(
-    (to: string) => {
-      setLeaving(true);
-      setTimeout(() => navigate({ to }), ms);
-    },
-    [navigate, ms],
-  );
-
-  return (
-    <ExitLoaderContext.Provider value={navigateWithLoader}>
-      {children}
-      {(entering || leaving) && <CrossLoader />}
-    </ExitLoaderContext.Provider>
-  );
+export function LoaderHost() {
+  const v = useSyncExternalStore(loaderStore.subscribe, loaderStore.get, () => false);
+  return v ? <CrossLoader /> : null;
 }
 
-import { createContext, useContext } from "react";
-const ExitLoaderContext = createContext<((to: string) => void) | null>(null);
+const LOADER_MS = 2000;
+
 export function useNavigateWithLoader() {
-  const fn = useContext(ExitLoaderContext);
   const navigate = useNavigate();
-  return fn ?? ((to: string) => navigate({ to }));
+  return (to: string) => {
+    loaderStore.show();
+    setTimeout(() => {
+      navigate({ to });
+      // hide shortly after navigation so the destination renders cleanly
+      setTimeout(() => loaderStore.hide(), 50);
+    }, LOADER_MS);
+  };
+}
+
+// Kept for backwards compatibility with existing route wrappers — now a no-op
+// passthrough that still shows an entry loader briefly when the route mounts
+// directly (e.g. on hard refresh of /cart or /checkout).
+export function WithEntryLoader({ children, ms = LOADER_MS }: { children: ReactNode; ms?: number }) {
+  const [entering, setEntering] = useState(() => !loaderStore.get());
+  useEffect(() => {
+    if (!entering) return;
+    loaderStore.show();
+    const id = setTimeout(() => {
+      loaderStore.hide();
+      setEntering(false);
+    }, ms);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <>{children}</>;
 }
