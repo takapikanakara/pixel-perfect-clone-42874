@@ -13,6 +13,7 @@ import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirad
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PagamentoIdRouteImport } from './routes/pagamento.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiPublicZangiwayWebhookRouteImport } from './routes/api/public/zangiway-webhook'
 
@@ -36,6 +37,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PagamentoIdRoute = PagamentoIdRouteImport.update({
+  id: '/pagamento/$id',
+  path: '/pagamento/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
+  '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
+  '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRoutesById {
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/api/chat': typeof ApiChatRoute
+  '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
 }
 export interface FileRouteTypes {
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/shark-aspirador-de-maos'
     | '/api/chat'
+    | '/pagamento/$id'
     | '/api/public/zangiway-webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/shark-aspirador-de-maos'
     | '/api/chat'
+    | '/pagamento/$id'
     | '/api/public/zangiway-webhook'
   id:
     | '__root__'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/shark-aspirador-de-maos'
     | '/api/chat'
+    | '/pagamento/$id'
     | '/api/public/zangiway-webhook'
   fileRoutesById: FileRoutesById
 }
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   SharkAspiradorDeMaosRoute: typeof SharkAspiradorDeMaosRoute
   ApiChatRoute: typeof ApiChatRoute
+  PagamentoIdRoute: typeof PagamentoIdRoute
   ApiPublicZangiwayWebhookRoute: typeof ApiPublicZangiwayWebhookRoute
 }
 
@@ -139,6 +152,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pagamento/$id': {
+      id: '/pagamento/$id'
+      path: '/pagamento/$id'
+      fullPath: '/pagamento/$id'
+      preLoaderRoute: typeof PagamentoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   SharkAspiradorDeMaosRoute: SharkAspiradorDeMaosRoute,
   ApiChatRoute: ApiChatRoute,
+  PagamentoIdRoute: PagamentoIdRoute,
   ApiPublicZangiwayWebhookRoute: ApiPublicZangiwayWebhookRoute,
 }
 export const routeTree = rootRouteImport
