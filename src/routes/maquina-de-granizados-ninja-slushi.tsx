@@ -253,7 +253,7 @@ function ProductPage() {
                 <path d="M12 7v10" strokeDasharray="1.5 2" />
               </svg>
             </div>
-            <div className="ml-[42px] mt-0.5 text-[11px] line-through opacity-90">€ 355,00</div>
+            <div className="ml-[42px] mt-0.5 text-[11px] line-through opacity-90">€ 285,00</div>
           </div>
 
           <div className="relative flex flex-col items-end justify-center">
