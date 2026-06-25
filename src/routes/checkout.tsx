@@ -31,13 +31,59 @@ export const Route = createFileRoute("/checkout")({
 type Shipping = "gratis" | "expressa";
 type Payment = "mbway" | "multibanco";
 
-function Field({ placeholder }: { placeholder: string }) {
+function Field({
+  placeholder,
+  value,
+  onChange,
+  inputMode,
+  maxLength,
+  type,
+}: {
+  placeholder: string;
+  value?: string;
+  onChange?: (v: string) => void;
+  inputMode?: "text" | "numeric" | "tel" | "email";
+  maxLength?: number;
+  type?: string;
+}) {
   return (
     <input
       placeholder={placeholder}
+      value={value}
+      type={type}
+      inputMode={inputMode}
+      maxLength={maxLength}
+      onChange={(e) => onChange?.(e.target.value)}
       className="w-full rounded-lg border border-gray-200 bg-gray-50/60 px-4 py-3.5 text-[15px] text-gray-900 placeholder:text-gray-400 outline-none focus:border-gray-400"
     />
   );
+}
+
+function formatPhonePT(v: string) {
+  const d = v.replace(/\D/g, "").replace(/^351/, "").slice(0, 9);
+  const p1 = d.slice(0, 3);
+  const p2 = d.slice(3, 6);
+  const p3 = d.slice(6, 9);
+  let rest = "";
+  if (p2) rest += " " + p2;
+  if (p3) rest += " " + p3;
+  return "+351 " + (p1 + rest).trim();
+}
+
+function formatCP(v: string) {
+  const d = v.replace(/\D/g, "").slice(0, 7);
+  if (d.length <= 4) return d;
+  return d.slice(0, 4) + "-" + d.slice(4);
+}
+
+function onlyDigits(v: string, max = 20) {
+  return v.replace(/\D/g, "").slice(0, max);
+}
+
+function titleCase(v: string) {
+  return v
+    .toLocaleLowerCase("pt-PT")
+    .replace(/(^|[\s'-])\p{L}/gu, (m) => m.toLocaleUpperCase("pt-PT"));
 }
 
 function CheckoutPage() {
@@ -48,6 +94,47 @@ function CheckoutPage() {
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
   const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
+
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
+  const [cp, setCp] = useState("");
+  const [distrito, setDistrito] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [freguesia, setFreguesia] = useState("");
+  const [morada, setMorada] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [cpLoading, setCpLoading] = useState(false);
+  const [cpError, setCpError] = useState("");
+  const [mbwayPhone, setMbwayPhone] = useState("");
+
+  useEffect(() => {
+    const clean = cp.replace(/\D/g, "");
+    if (clean.length !== 7) {
+      setCpError("");
+      return;
+    }
+    const cp4 = clean.slice(0, 4);
+    const cp3 = clean.slice(4);
+    const ctrl = new AbortController();
+    setCpLoading(true);
+    setCpError("");
+    fetch(`https://json.geoapi.pt/cp/${cp4}-${cp3}`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("not found"))))
+      .then((data: any) => {
+        if (data?.Distrito) setDistrito(data.Distrito);
+        if (data?.Concelho) setCidade(data.Concelho);
+        if (data?.Localidade) setFreguesia(data.Localidade);
+        const rua = data?.partes?.[0]?.["Artéria"];
+        if (rua) setMorada(rua);
+      })
+      .catch((e) => {
+        if (e.name !== "AbortError") setCpError("Código postal não encontrado");
+      })
+      .finally(() => setCpLoading(false));
+    return () => ctrl.abort();
+  }, [cp]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -93,19 +180,23 @@ function CheckoutPage() {
             <h2 className="text-[17px] font-bold text-gray-900">Morada de entrega</h2>
           </div>
           <div className="mt-4 space-y-3">
-            <Field placeholder="Nome completo" />
-            <Field placeholder="+351  912 345 678" />
-            <Field placeholder="E-mail" />
-            <Field placeholder="Código postal (1234-567)" />
-            <div className="grid grid-cols-2 gap-3">
-              <Field placeholder="Distrito" />
-              <Field placeholder="Cidade" />
+            <Field placeholder="Nome completo" value={nome} onChange={(v) => setNome(titleCase(v))} />
+            <Field placeholder="+351 912 345 678" value={telefone} onChange={(v) => setTelefone(formatPhonePT(v))} inputMode="tel" maxLength={17} />
+            <Field placeholder="E-mail" value={email} onChange={(v) => setEmail(v.trim().toLowerCase())} inputMode="email" type="email" />
+            <div>
+              <Field placeholder="Código postal (1234-567)" value={cp} onChange={(v) => setCp(formatCP(v))} inputMode="numeric" maxLength={8} />
+              {cpLoading && <p className="mt-1 px-1 text-[12px] text-gray-500">A procurar morada…</p>}
+              {cpError && <p className="mt-1 px-1 text-[12px] text-[#ff4d63]">{cpError}</p>}
             </div>
-            <Field placeholder="Freguesia" />
-            <Field placeholder="Morada (rua, avenida...)" />
             <div className="grid grid-cols-2 gap-3">
-              <Field placeholder="Número" />
-              <Field placeholder="Complemento" />
+              <Field placeholder="Distrito" value={distrito} onChange={(v) => setDistrito(titleCase(v))} />
+              <Field placeholder="Cidade" value={cidade} onChange={(v) => setCidade(titleCase(v))} />
+            </div>
+            <Field placeholder="Freguesia" value={freguesia} onChange={(v) => setFreguesia(titleCase(v))} />
+            <Field placeholder="Morada (rua, avenida...)" value={morada} onChange={(v) => setMorada(titleCase(v))} />
+            <div className="grid grid-cols-2 gap-3">
+              <Field placeholder="Número" value={numero} onChange={(v) => setNumero(onlyDigits(v, 6))} inputMode="numeric" />
+              <Field placeholder="Complemento" value={complemento} onChange={setComplemento} />
             </div>
           </div>
         </section>
@@ -277,7 +368,7 @@ function CheckoutPage() {
 
             {payment === "mbway" && (
               <div>
-                <Field placeholder="+351  9XX XXX XXX" />
+                <Field placeholder="+351 9XX XXX XXX" value={mbwayPhone} onChange={(v) => setMbwayPhone(formatPhonePT(v))} inputMode="tel" maxLength={17} />
                 <p className="mt-2 text-[13px] text-gray-500">
                   Receberá um pedido de pagamento na app MB WAY associada a este número.
                 </p>
