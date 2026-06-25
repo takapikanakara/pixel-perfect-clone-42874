@@ -44,6 +44,20 @@ function CheckoutPage() {
   const [qty, setQty] = useState(1);
   const [shipping, setShipping] = useState<Shipping>("gratis");
   const [payment, setPayment] = useState<Payment>("mbway");
+  const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setSecondsLeft((s) => (s > 0 ? s - 1 : 0));
+    }, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+  const hh = Math.floor(secondsLeft / 3600);
+  const mm = Math.floor((secondsLeft % 3600) / 60);
+  const ss = secondsLeft % 60;
+  const timer = `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
 
   const unit = 97.9;
   const subtotal = unit * qty;
