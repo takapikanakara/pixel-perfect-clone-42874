@@ -1,5 +1,6 @@
 import sharkVacuum from "@/assets/shark-vacuum.png.asset.json";
 import ninjaSlushi from "@/assets/ninja-slushi.webp.asset.json";
+import sharkFlexbreeze from "@/assets/shark-flexbreeze.jpg.asset.json";
 
 export type Product = {
   id: string;
@@ -29,6 +30,15 @@ export const PRODUCTS: Product[] = [
     price: 109.9,
     oldPrice: 285,
     image: ninjaSlushi.url,
+  },
+  {
+    id: "shark-flexbreeze",
+    slug: "shark-ventoinha-flexbreeze-hydrogo",
+    name: "Shark Ventoinha de Chão FLEXBREEZE HydroGo — Portátil sem Fios",
+    shortName: "Shark FLEXBREEZE HydroGo",
+    price: 39,
+    oldPrice: 113.91,
+    image: sharkFlexbreeze.url,
   },
 ];
 
