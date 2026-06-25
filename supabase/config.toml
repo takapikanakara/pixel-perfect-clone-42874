@@ -1,1 +1,7 @@
 project_id = "bkztqodvqqfkcwyjkhnl"
+
+[functions.utmify-deposito-gerado]
+verify_jwt = false
+
+[functions.utmify-deposito-pago]
+verify_jwt = false
