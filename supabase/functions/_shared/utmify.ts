@@ -43,6 +43,7 @@ function mapPaymentMethod(value: any): "pix" | "credit_card" | "billet" | "free_
 export async function forwardToUtmify(
   rawBody: AnyRecord,
   status: UtmifyStatus,
+  fallbackIp?: string | null,
 ): Promise<{ ok: boolean; status: number; body: string }> {
   const token = Deno.env.get("UTMIFY_API_TOKEN");
   if (!token) {
@@ -111,7 +112,7 @@ export async function forwardToUtmify(
       phone: pick<string>(customer, "phone", "phoneNumber") ?? null,
       document: pick<string>(customer, "document", "nif", "cpf", "vat") ?? null,
       country: pick<string>(customer, "country") ?? "PT",
-      ip: pick<string>(rawBody, "ip", "clientIp", "transaction.ip") ?? null,
+      ip: pick<string>(customer, "ip") ?? pick<string>(rawBody, "ip", "clientIp", "transaction.ip") ?? fallbackIp ?? "0.0.0.0",
     },
     products,
     trackingParameters: {
