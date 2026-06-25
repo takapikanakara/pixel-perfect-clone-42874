@@ -293,9 +293,9 @@ function ProductPage() {
           <div className="mt-2 flex items-center gap-2 text-[13px]">
             <Star size={16} className="fill-[#f5b400] text-[#f5b400]" />
             <span className="font-semibold text-gray-900">5,0</span>
-            <span className="text-[#1c7ed6]">(343)</span>
+            <span className="text-[#1c7ed6]">(650)</span>
             <span className="text-gray-300">|</span>
-            <span className="text-gray-500">1324 vendidos</span>
+            <span className="text-gray-500">2314 vendidos</span>
           </div>
         </section>
 
