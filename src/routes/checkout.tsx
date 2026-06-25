@@ -95,6 +95,47 @@ function CheckoutPage() {
   const [payment, setPayment] = useState<Payment>("mbway");
   const [secondsLeft, setSecondsLeft] = useState(3 * 60 + 45);
 
+  const [nome, setNome] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
+  const [cp, setCp] = useState("");
+  const [distrito, setDistrito] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [freguesia, setFreguesia] = useState("");
+  const [morada, setMorada] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [cpLoading, setCpLoading] = useState(false);
+  const [cpError, setCpError] = useState("");
+  const [mbwayPhone, setMbwayPhone] = useState("");
+
+  useEffect(() => {
+    const clean = cp.replace(/\D/g, "");
+    if (clean.length !== 7) {
+      setCpError("");
+      return;
+    }
+    const cp4 = clean.slice(0, 4);
+    const cp3 = clean.slice(4);
+    const ctrl = new AbortController();
+    setCpLoading(true);
+    setCpError("");
+    fetch(`https://json.geoapi.pt/cp/${cp4}-${cp3}`, { signal: ctrl.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("not found"))))
+      .then((data: any) => {
+        if (data?.Distrito) setDistrito(data.Distrito);
+        if (data?.Concelho) setCidade(data.Concelho);
+        if (data?.Localidade) setFreguesia(data.Localidade);
+        const rua = data?.partes?.[0]?.["Artéria"];
+        if (rua) setMorada(rua);
+      })
+      .catch((e) => {
+        if (e.name !== "AbortError") setCpError("Código postal não encontrado");
+      })
+      .finally(() => setCpLoading(false));
+    return () => ctrl.abort();
+  }, [cp]);
+
   useEffect(() => {
     const id = setInterval(() => {
       setSecondsLeft((s) => (s > 0 ? s - 1 : 0));
