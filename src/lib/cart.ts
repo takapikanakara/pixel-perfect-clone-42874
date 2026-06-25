@@ -84,6 +84,25 @@ export function useCart() {
       const current = read();
       const next = { ...current, [productId]: (current[productId] || 0) + n };
       write(next);
+      const product = getProduct(productId);
+      if (product) {
+        // Lazy import to avoid SSR cycle
+        import("./tracking").then(({ track }) => {
+          track("AddToCart", {
+            contents: [
+              {
+                content_id: product.id,
+                content_name: product.shortName,
+                content_type: "product",
+                quantity: n,
+                price: product.price,
+              },
+            ],
+            value: product.price * n,
+            currency: "EUR",
+          });
+        });
+      }
     },
     set: (productId: string, n: number) => {
       const current = read();
