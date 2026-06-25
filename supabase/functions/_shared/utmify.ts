@@ -112,7 +112,7 @@ export async function forwardToUtmify(
       phone: pick<string>(customer, "phone", "phoneNumber") ?? null,
       document: pick<string>(customer, "document", "nif", "cpf", "vat") ?? null,
       country: pick<string>(customer, "country") ?? "PT",
-      ip: pick<string>(rawBody, "ip", "clientIp", "transaction.ip") ?? null,
+      ip: pick<string>(customer, "ip") ?? pick<string>(rawBody, "ip", "clientIp", "transaction.ip") ?? fallbackIp ?? "0.0.0.0",
     },
     products,
     trackingParameters: {
