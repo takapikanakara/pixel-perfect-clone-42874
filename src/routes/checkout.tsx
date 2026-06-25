@@ -116,6 +116,8 @@ function CheckoutPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const createTx = useServerFn(createZangiwayTransaction);
+
+  useEffect(() => {
     const clean = cp.replace(/\D/g, "");
     if (clean.length !== 7) {
       setCpError("");
