@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SharkVentoinhaFlexbreezeHydrogoRouteImport } from './routes/shark-ventoinha-flexbreeze-hydrogo'
 import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirador-de-maos'
 import { Route as MaquinaDeGranizadosNinjaSlushiRouteImport } from './routes/maquina-de-granizados-ninja-slushi'
+import { Route as ConsolaNintendoSwitch2MarioKartWorldRouteImport } from './routes/consola-nintendo-switch-2-mario-kart-world'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as AspiradorRoboIrobotRoomba105ComboRouteImport } from './routes/aspirador-robo-irobot-roomba-105-combo'
@@ -35,6 +36,12 @@ const MaquinaDeGranizadosNinjaSlushiRoute =
   MaquinaDeGranizadosNinjaSlushiRouteImport.update({
     id: '/maquina-de-granizados-ninja-slushi',
     path: '/maquina-de-granizados-ninja-slushi',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ConsolaNintendoSwitch2MarioKartWorldRoute =
+  ConsolaNintendoSwitch2MarioKartWorldRouteImport.update({
+    id: '/consola-nintendo-switch-2-mario-kart-world',
+    path: '/consola-nintendo-switch-2-mario-kart-world',
     getParentRoute: () => rootRouteImport,
   } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -80,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/consola-nintendo-switch-2-mario-kart-world': typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/consola-nintendo-switch-2-mario-kart-world': typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/aspirador-robo-irobot-roomba-105-combo': typeof AspiradorRoboIrobotRoomba105ComboRoute
   '/cart': typeof CartRoute
   '/checkout': typeof CheckoutRoute
+  '/consola-nintendo-switch-2-mario-kart-world': typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
   '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
+    | '/consola-nintendo-switch-2-mario-kart-world'
     | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
     | '/shark-ventoinha-flexbreeze-hydrogo'
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
+    | '/consola-nintendo-switch-2-mario-kart-world'
     | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
     | '/shark-ventoinha-flexbreeze-hydrogo'
@@ -143,6 +155,7 @@ export interface FileRouteTypes {
     | '/aspirador-robo-irobot-roomba-105-combo'
     | '/cart'
     | '/checkout'
+    | '/consola-nintendo-switch-2-mario-kart-world'
     | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
     | '/shark-ventoinha-flexbreeze-hydrogo'
@@ -156,6 +169,7 @@ export interface RootRouteChildren {
   AspiradorRoboIrobotRoomba105ComboRoute: typeof AspiradorRoboIrobotRoomba105ComboRoute
   CartRoute: typeof CartRoute
   CheckoutRoute: typeof CheckoutRoute
+  ConsolaNintendoSwitch2MarioKartWorldRoute: typeof ConsolaNintendoSwitch2MarioKartWorldRoute
   MaquinaDeGranizadosNinjaSlushiRoute: typeof MaquinaDeGranizadosNinjaSlushiRoute
   SharkAspiradorDeMaosRoute: typeof SharkAspiradorDeMaosRoute
   SharkVentoinhaFlexbreezeHydrogoRoute: typeof SharkVentoinhaFlexbreezeHydrogoRoute
@@ -185,6 +199,13 @@ declare module '@tanstack/react-router' {
       path: '/maquina-de-granizados-ninja-slushi'
       fullPath: '/maquina-de-granizados-ninja-slushi'
       preLoaderRoute: typeof MaquinaDeGranizadosNinjaSlushiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/consola-nintendo-switch-2-mario-kart-world': {
+      id: '/consola-nintendo-switch-2-mario-kart-world'
+      path: '/consola-nintendo-switch-2-mario-kart-world'
+      fullPath: '/consola-nintendo-switch-2-mario-kart-world'
+      preLoaderRoute: typeof ConsolaNintendoSwitch2MarioKartWorldRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout': {
@@ -245,6 +266,8 @@ const rootRouteChildren: RootRouteChildren = {
     AspiradorRoboIrobotRoomba105ComboRoute,
   CartRoute: CartRoute,
   CheckoutRoute: CheckoutRoute,
+  ConsolaNintendoSwitch2MarioKartWorldRoute:
+    ConsolaNintendoSwitch2MarioKartWorldRoute,
   MaquinaDeGranizadosNinjaSlushiRoute: MaquinaDeGranizadosNinjaSlushiRoute,
   SharkAspiradorDeMaosRoute: SharkAspiradorDeMaosRoute,
   SharkVentoinhaFlexbreezeHydrogoRoute: SharkVentoinhaFlexbreezeHydrogoRoute,
