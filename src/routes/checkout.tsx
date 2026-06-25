@@ -412,16 +412,52 @@ function CheckoutPage() {
       </div>
 
       {/* Bottom action bar */}
-      <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-[480px] -translate-x-1/2 border-t border-gray-100 bg-white px-4 py-3">
-        <div className="flex items-center justify-between pb-2">
-          <span className="text-[15px] font-bold text-gray-900">Total ({qty} artigo{qty > 1 ? "s" : ""})</span>
-          <span className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(total)}</span>
-        </div>
-        <button className="w-full rounded-xl bg-gray-100 px-4 py-3 text-center">
-          <div className="text-[16px] font-bold text-gray-500">Finalizar encomenda</div>
-          <div className="text-[12px] text-gray-500">Preencha todos os dados para continuar</div>
-        </button>
-      </div>
+      {(() => {
+        const phoneDigits = telefone.replace(/\D/g, "").replace(/^351/, "");
+        const mbwayDigits = mbwayPhone.replace(/\D/g, "").replace(/^351/, "");
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const addressOk =
+          nome.trim().length > 2 &&
+          phoneDigits.length === 9 &&
+          emailOk &&
+          cp.replace(/\D/g, "").length === 7 &&
+          distrito.trim() &&
+          cidade.trim() &&
+          freguesia.trim() &&
+          morada.trim() &&
+          numero.trim();
+        const paymentOk = payment === "multibanco" || (payment === "mbway" && mbwayDigits.length === 9);
+        const canSubmit = Boolean(addressOk && paymentOk);
+        return (
+          <div className="fixed bottom-0 left-1/2 z-30 w-full max-w-[480px] -translate-x-1/2 border-t border-gray-100 bg-white px-4 py-3">
+            <div className="flex items-center justify-between pb-2">
+              <span className="text-[15px] font-bold text-gray-900">Total ({qty} artigo{qty > 1 ? "s" : ""})</span>
+              <span className="text-[18px] font-extrabold text-[#ff4d63]">€ {fmt(total)}</span>
+            </div>
+            <button
+              disabled={!canSubmit}
+              onClick={() => {
+                if (!canSubmit) return;
+                alert("Pagamento em breve — gateway será integrado.");
+              }}
+              className={`w-full rounded-xl px-4 py-3 text-center transition-colors ${
+                canSubmit ? "bg-[#ff4d63]" : "bg-gray-100"
+              }`}
+            >
+              <div className={`text-[16px] font-bold ${canSubmit ? "text-white" : "text-gray-500"}`}>
+                Finalizar encomenda
+              </div>
+              <div className={`text-[12px] ${canSubmit ? "text-white/90" : "text-gray-500"}`}>
+                {canSubmit
+                  ? payment === "mbway"
+                    ? "Pagar com MB WAY"
+                    : "Gerar referência Multibanco"
+                  : "Preencha todos os dados para continuar"}
+              </div>
+            </button>
+          </div>
+        );
+      })()}
     </div>
   );
 }
