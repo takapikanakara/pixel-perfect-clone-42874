@@ -112,8 +112,10 @@ function CheckoutPage() {
   const [cpLoading, setCpLoading] = useState(false);
   const [cpError, setCpError] = useState("");
   const [mbwayPhone, setMbwayPhone] = useState("");
-
-  useEffect(() => {
+  const [nif, setNif] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const createTx = useServerFn(createZangiwayTransaction);
     const clean = cp.replace(/\D/g, "");
     if (clean.length !== 7) {
       setCpError("");
