@@ -322,17 +322,19 @@ function CheckoutPage() {
         </section>
 
         {/* Desconto especial */}
-        <section className="px-4">
-          <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-            <div className="flex items-center gap-2.5">
-              <Ticket size={20} className="text-[#ff4d63]" />
-              <span className="text-[15px] text-gray-900">Desconto especial</span>
+        {discount > 0 && (
+          <section className="px-4">
+            <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+              <div className="flex items-center gap-2.5">
+                <Ticket size={20} className="text-[#ff4d63]" />
+                <span className="text-[15px] text-gray-900">Desconto especial</span>
+              </div>
+              <span className="rounded-md bg-[#ffe5e9] px-2 py-1 text-[14px] font-bold text-[#ff4d63]">
+                - € {fmt(discount)}
+              </span>
             </div>
-            <span className="rounded-md bg-[#ffe5e9] px-2 py-1 text-[14px] font-bold text-[#ff4d63]">
-              - € 257,10
-            </span>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Resumo */}
         <section className="mt-4 border-t border-gray-100 px-4 pt-4">
