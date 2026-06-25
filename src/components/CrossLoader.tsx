@@ -1,4 +1,5 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, useCallback, type ReactNode } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 export function CrossLoader() {
   return (
@@ -18,15 +19,35 @@ export function CrossLoader() {
 }
 
 export function WithEntryLoader({ children, ms = 2000 }: { children: ReactNode; ms?: number }) {
-  const [loading, setLoading] = useState(true);
+  const [entering, setEntering] = useState(true);
+  const [leaving, setLeaving] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const id = setTimeout(() => setLoading(false), ms);
+    const id = setTimeout(() => setEntering(false), ms);
     return () => clearTimeout(id);
   }, [ms]);
-  return (
-    <>
-      {children}
-      {loading && <CrossLoader />}
-    </>
+
+  const navigateWithLoader = useCallback(
+    (to: string) => {
+      setLeaving(true);
+      setTimeout(() => navigate({ to }), ms);
+    },
+    [navigate, ms],
   );
+
+  return (
+    <ExitLoaderContext.Provider value={navigateWithLoader}>
+      {children}
+      {(entering || leaving) && <CrossLoader />}
+    </ExitLoaderContext.Provider>
+  );
+}
+
+import { createContext, useContext } from "react";
+const ExitLoaderContext = createContext<((to: string) => void) | null>(null);
+export function useNavigateWithLoader() {
+  const fn = useContext(ExitLoaderContext);
+  const navigate = useNavigate();
+  return fn ?? ((to: string) => navigate({ to }));
 }
