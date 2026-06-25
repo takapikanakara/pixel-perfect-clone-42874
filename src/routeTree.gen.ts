@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SharkVentoinhaFlexbreezeHydrogoRouteImport } from './routes/shark-ventoinha-flexbreeze-hydrogo'
 import { Route as SharkAspiradorDeMaosRouteImport } from './routes/shark-aspirador-de-maos'
 import { Route as MaquinaDeGranizadosNinjaSlushiRouteImport } from './routes/maquina-de-granizados-ninja-slushi'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -18,6 +19,12 @@ import { Route as PagamentoIdRouteImport } from './routes/pagamento.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as ApiPublicZangiwayWebhookRouteImport } from './routes/api/public/zangiway-webhook'
 
+const SharkVentoinhaFlexbreezeHydrogoRoute =
+  SharkVentoinhaFlexbreezeHydrogoRouteImport.update({
+    id: '/shark-ventoinha-flexbreeze-hydrogo',
+    path: '/shark-ventoinha-flexbreeze-hydrogo',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SharkAspiradorDeMaosRoute = SharkAspiradorDeMaosRouteImport.update({
   id: '/shark-aspirador-de-maos',
   path: '/shark-aspirador-de-maos',
@@ -67,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
+  '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
@@ -77,6 +85,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
+  '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
@@ -88,6 +97,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/maquina-de-granizados-ninja-slushi': typeof MaquinaDeGranizadosNinjaSlushiRoute
   '/shark-aspirador-de-maos': typeof SharkAspiradorDeMaosRoute
+  '/shark-ventoinha-flexbreeze-hydrogo': typeof SharkVentoinhaFlexbreezeHydrogoRoute
   '/api/chat': typeof ApiChatRoute
   '/pagamento/$id': typeof PagamentoIdRoute
   '/api/public/zangiway-webhook': typeof ApiPublicZangiwayWebhookRoute
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
+    | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
     | '/pagamento/$id'
     | '/api/public/zangiway-webhook'
@@ -110,6 +121,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
+    | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
     | '/pagamento/$id'
     | '/api/public/zangiway-webhook'
@@ -120,6 +132,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/maquina-de-granizados-ninja-slushi'
     | '/shark-aspirador-de-maos'
+    | '/shark-ventoinha-flexbreeze-hydrogo'
     | '/api/chat'
     | '/pagamento/$id'
     | '/api/public/zangiway-webhook'
@@ -131,6 +144,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   MaquinaDeGranizadosNinjaSlushiRoute: typeof MaquinaDeGranizadosNinjaSlushiRoute
   SharkAspiradorDeMaosRoute: typeof SharkAspiradorDeMaosRoute
+  SharkVentoinhaFlexbreezeHydrogoRoute: typeof SharkVentoinhaFlexbreezeHydrogoRoute
   ApiChatRoute: typeof ApiChatRoute
   PagamentoIdRoute: typeof PagamentoIdRoute
   ApiPublicZangiwayWebhookRoute: typeof ApiPublicZangiwayWebhookRoute
@@ -138,6 +152,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/shark-ventoinha-flexbreeze-hydrogo': {
+      id: '/shark-ventoinha-flexbreeze-hydrogo'
+      path: '/shark-ventoinha-flexbreeze-hydrogo'
+      fullPath: '/shark-ventoinha-flexbreeze-hydrogo'
+      preLoaderRoute: typeof SharkVentoinhaFlexbreezeHydrogoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shark-aspirador-de-maos': {
       id: '/shark-aspirador-de-maos'
       path: '/shark-aspirador-de-maos'
@@ -203,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   MaquinaDeGranizadosNinjaSlushiRoute: MaquinaDeGranizadosNinjaSlushiRoute,
   SharkAspiradorDeMaosRoute: SharkAspiradorDeMaosRoute,
+  SharkVentoinhaFlexbreezeHydrogoRoute: SharkVentoinhaFlexbreezeHydrogoRoute,
   ApiChatRoute: ApiChatRoute,
   PagamentoIdRoute: PagamentoIdRoute,
   ApiPublicZangiwayWebhookRoute: ApiPublicZangiwayWebhookRoute,
