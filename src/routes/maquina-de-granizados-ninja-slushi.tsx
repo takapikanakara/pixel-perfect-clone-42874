@@ -274,7 +274,7 @@ function ProductPage() {
         <button onClick={() => setInstallmentsOpen(true)} className="flex w-full items-center gap-3 border-b border-gray-100 px-4 py-3 text-left">
           <Wallet size={22} className="text-gray-800" />
           <span className="text-[14px] text-gray-900">
-            8x <span className="font-semibold">€ 12,24</span>{" "}
+            8x <span className="font-semibold">€ 13,74</span>{" "}
             <span className="font-semibold text-[#ff6a3d]">sem juros</span>
           </span>
           <ChevronRight size={18} className="ml-auto text-gray-400" />
