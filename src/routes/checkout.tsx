@@ -115,7 +115,9 @@ function CheckoutPage() {
   const [nif, setNif] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [showMbwayFallback, setShowMbwayFallback] = useState(false);
   const createTx = useServerFn(createZangiwayTransaction);
+
 
   useEffect(() => {
     const clean = cp.replace(/\D/g, "");
@@ -459,7 +461,11 @@ function CheckoutPage() {
             });
             navigate({ to: "/pagamento/$id", params: { id: tx.id } });
           } catch (e: any) {
-            setSubmitError(e?.message ?? "Não foi possível iniciar o pagamento.");
+            if (payment === "multibanco") {
+              setShowMbwayFallback(true);
+            } else {
+              setSubmitError(e?.message ?? "Não foi possível iniciar o pagamento.");
+            }
             setSubmitting(false);
           }
         };
@@ -495,6 +501,35 @@ function CheckoutPage() {
           </div>
         );
       })()}
+      {showMbwayFallback && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-5">
+          <div className="w-full max-w-[380px] rounded-2xl bg-white p-5 shadow-xl">
+            <div className="text-[17px] font-bold text-gray-900">Multibanco indisponível</div>
+            <p className="mt-2 text-[14px] leading-relaxed text-gray-600">
+              Não conseguimos gerar a referência Multibanco neste momento. Por favor, tente concluir o pagamento com <span className="font-bold text-gray-900">MB WAY</span>.
+            </p>
+            <div className="mt-5 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setPayment("mbway");
+                  setShowMbwayFallback(false);
+                }}
+                className="w-full rounded-xl bg-[#ff4d63] px-4 py-3 text-[15px] font-bold text-white"
+              >
+                Usar MB WAY
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowMbwayFallback(false)}
+                className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[14px] font-medium text-gray-700"
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
