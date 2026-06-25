@@ -137,7 +137,27 @@ function ProductPage() {
             <Search size={18} className="shrink-0 text-gray-500" />
             <span className="truncate whitespace-nowrap text-[15px] text-gray-700">shark aspirador de mão</span>
           </div>
-          <button className="p-1.5">
+          <button
+            onClick={async () => {
+              const shareData = {
+                title: "Shark Aspirador de Mão sem Fios",
+                text: "Olha que oferta no Shark Aspirador de Mão sem Fios!",
+                url: typeof window !== "undefined" ? window.location.href : "",
+              };
+              try {
+                if (typeof navigator !== "undefined" && navigator.share) {
+                  await navigator.share(shareData);
+                } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+                  await navigator.clipboard.writeText(shareData.url);
+                  alert("Link copiado para a área de transferência!");
+                }
+              } catch {
+                /* user cancelled */
+              }
+            }}
+            aria-label="Compartilhar"
+            className="p-1.5"
+          >
             <img src={shareIcon.url} alt="Compartilhar" className="h-10 w-10 object-contain" />
           </button>
           <button onClick={() => navigate({ to: "/cart" })} className="relative p-1.5">
