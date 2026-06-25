@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
 
-const ZANGIWAY_BASE = "https://api.zangiway.com";
+const ZANGIWAY_BASE = "https://api.waymb.com";
 
 type Method = "mbway" | "multibanco";
 
